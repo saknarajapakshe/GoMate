@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "streambox-movies",
-    "slug": "streambox-movies",
+    "name": "GoMate",
+    "slug": "gomate",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "streamboxmovies",
+    "scheme": "gomate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
