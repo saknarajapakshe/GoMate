@@ -3,7 +3,7 @@ import { logout } from '@/store/slices/authSlice';
 import { toggleDarkMode } from '@/store/slices/themeSlice';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Image, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
   const router = useRouter();
