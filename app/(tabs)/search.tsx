@@ -29,11 +29,11 @@ const FILTER_OPTIONS = [
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'Active':
-      return '#00534E';
+      return '#86da18';
     case 'Popular':
-      return '#8D153A';
+      return '#54c502';
     case 'Upcoming':
-      return '#E57200';
+      return '#86da18';
     default:
       return '#737373';
   }
@@ -177,7 +177,7 @@ export default function SearchScreen() {
 
         {isLoading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#8D153A" />
+            <ActivityIndicator size="large" color="#54c502" />
           </View>
         ) : searchResults.length === 0 ? (
           <View style={styles.emptyContainer}>
@@ -202,14 +202,14 @@ export default function SearchScreen() {
                     <Feather
                       name="heart"
                       size={18}
-                      color={isFavourite(item.id) ? '#8D153A' : '#d0d0d0'}
+                      color={isFavourite(item.id) ? '#54c502' : '#d0d0d0'}
                     />
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.resultSubtitle} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.resultFooter}>
                   <View style={styles.typeBadge}>
-                    <Feather name={getTypeIcon(item.type)} size={10} color="#8D153A" />
+                    <Feather name={getTypeIcon(item.type)} size={10} color="#54c502" />
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   header: {
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -306,8 +306,8 @@ const styles = StyleSheet.create({
 
   },
   filterChipActive: {
-    backgroundColor: '#8D153A',
-    borderColor: '#8D153A',
+    backgroundColor: '#54c502',
+    borderColor: '#54c502',
   },
   filterIcon: {
 
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     borderRadius: 16,
     padding: 20,
     marginTop: 8,
@@ -446,12 +446,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 10,
-    backgroundColor: 'rgba(141, 21, 58, 0.1)',
+    backgroundColor: 'rgba(84, 197, 2, 0.1)',
   },
   typeText: {
     fontSize: 11,
     fontWeight: '500',
-    color: '#8D153A',
+    color: '#54c502',
     marginLeft: 4,
     textTransform: 'capitalize',
   },

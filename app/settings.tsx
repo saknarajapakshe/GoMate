@@ -30,8 +30,8 @@ export default function SettingsScreen() {
             <Switch
               value={darkMode}
               onValueChange={setDarkMode}
-              trackColor={{ false: '#e5e5e5', true: '#8D153A' }}
-              thumbColor={darkMode ? '#FDB913' : '#f4f3f4'}
+              trackColor={{ false: '#e5e5e5', true: '#54c502' }}
+              thumbColor={darkMode ? '#86da18' : '#f4f3f4'}
             />
           </View>
         </View>
@@ -45,8 +45,8 @@ export default function SettingsScreen() {
               onValueChange={(value) =>
                 setNotifications({ ...notifications, all: value })
               }
-              trackColor={{ false: '#e5e5e5', true: '#8D153A' }}
-              thumbColor={notifications.all ? '#FDB913' : '#f4f3f4'}
+              trackColor={{ false: '#e5e5e5', true: '#54c502' }}
+              thumbColor={notifications.all ? '#86da18' : '#f4f3f4'}
             />
           </View>
           <View style={styles.settingRow}>
@@ -56,8 +56,8 @@ export default function SettingsScreen() {
               onValueChange={(value) =>
                 setNotifications({ ...notifications, push: value })
               }
-              trackColor={{ false: '#e5e5e5', true: '#8D153A' }}
-              thumbColor={notifications.push ? '#FDB913' : '#f4f3f4'}
+              trackColor={{ false: '#e5e5e5', true: '#54c502' }}
+              thumbColor={notifications.push ? '#86da18' : '#f4f3f4'}
             />
           </View>
           <View style={styles.settingRow}>
@@ -67,8 +67,8 @@ export default function SettingsScreen() {
               onValueChange={(value) =>
                 setNotifications({ ...notifications, email: value })
               }
-              trackColor={{ false: '#e5e5e5', true: '#8D153A' }}
-              thumbColor={notifications.email ? '#FDB913' : '#f4f3f4'}
+              trackColor={{ false: '#e5e5e5', true: '#54c502' }}
+              thumbColor={notifications.email ? '#86da18' : '#f4f3f4'}
             />
           </View>
         </View>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#8D153A',
+    borderColor: '#54c502',
     marginRight: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
   },
   languageText: {
     fontSize: 16,

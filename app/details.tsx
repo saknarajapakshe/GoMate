@@ -18,11 +18,11 @@ import {
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'Active':
-      return '#00534E';
+      return '#86da18';
     case 'Popular':
-      return '#8D153A';
+      return '#54c502';
     case 'Upcoming':
-      return '#E57200';
+      return '#86da18';
     default:
       return '#737373';
   }
@@ -68,7 +68,7 @@ export default function DetailsScreen() {
   if (isLoading || !selectedRoute) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#8D153A" />
+        <ActivityIndicator size="large" color="#54c502" />
       </View>
     );
   }
@@ -96,7 +96,7 @@ export default function DetailsScreen() {
           <View style={styles.header}>
             <View style={styles.headerLeft}>
               <View style={styles.typeContainer}>
-                <Feather name={getTypeIcon(selectedRoute.type)} size={16} color="#8D153A" />
+                <Feather name={getTypeIcon(selectedRoute.type)} size={16} color="#54c502" />
                 <Text style={styles.typeText}>{selectedRoute.type}</Text>
               </View>
               <Text style={styles.title}>{selectedRoute.title}</Text>
@@ -118,7 +118,7 @@ export default function DetailsScreen() {
                     key={star}
                     name="star"
                     size={18}
-                    color={star <= Math.floor(selectedRoute.rating!) ? '#FDB913' : '#e0e0e0'}
+                    color={star <= Math.floor(selectedRoute.rating!) ? '#86da18' : '#e0e0e0'}
                   />
                 ))}
               </View>
@@ -164,14 +164,14 @@ export default function DetailsScreen() {
             <View style={styles.detailsGrid}>
               {selectedRoute.duration && (
                 <View style={styles.detailCard}>
-                  <Feather name="clock" size={24} color="#8D153A" />
+                  <Feather name="clock" size={24} color="#54c502" />
                   <Text style={styles.detailLabel}>Duration</Text>
                   <Text style={styles.detailValue}>{selectedRoute.duration}</Text>
                 </View>
               )}
               {selectedRoute.price && (
                 <View style={styles.detailCard}>
-                  <Feather name="tag" size={24} color="#00534E" />
+                  <Feather name="tag" size={24} color="#86da18" />
                   <Text style={styles.detailLabel}>Price</Text>
                   <Text style={styles.detailValue}>{selectedRoute.price}</Text>
                 </View>
@@ -208,7 +208,7 @@ export default function DetailsScreen() {
           <Feather
             name="heart"
             size={24}
-            color={isFavourite(selectedRoute.id) ? '#8D153A' : '#737373'}
+            color={isFavourite(selectedRoute.id) ? '#54c502' : '#737373'}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bookButton}>
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontSize: 14,
     fontWeight: '500',
-    color: '#8D153A',
+    color: '#54c502',
     textTransform: 'capitalize',
   },
   title: {
@@ -359,14 +359,14 @@ const styles = StyleSheet.create({
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: '#00534E',
+    backgroundColor: '#86da18',
     marginRight: 16,
   },
   routeDotEnd: {
     width: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     marginRight: 16,
   },
   routeLine: {
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     borderRadius: 16,
     paddingVertical: 18,
     gap: 8,

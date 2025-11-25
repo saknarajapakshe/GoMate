@@ -24,7 +24,7 @@ export default function SplashScreen() {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <View style={styles.iconCircle}>
-          <Feather name="compass" size={60} color="#FDB913" />
+          <Feather name="compass" size={60} color="#86da18" />
         </View>
       </View>
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
   },
   logoContainer: {
     marginBottom: 24,

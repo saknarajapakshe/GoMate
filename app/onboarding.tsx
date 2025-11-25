@@ -10,19 +10,19 @@ const slides = [
     title: 'Explore Public Transport',
     description: 'Find buses, trains, and destinations across Sri Lanka with ease',
     icon: 'compass' as const,
-    bgColor: '#8D153A',
+    bgColor: '#54c502',
   },
   {
     title: 'Find Routes & Schedules',
     description: 'Real-time schedules and route information at your fingertips',
     icon: 'map' as const,
-    bgColor: '#00534E',
+    bgColor: '#86da18',
   },
   {
     title: 'Save Favorites & Plan',
     description: 'Keep track of your favorite routes and plan your journeys ahead',
     icon: 'heart' as const,
-    bgColor: '#E57200',
+    bgColor: '#86da18',
   },
 ];
 
@@ -56,7 +56,7 @@ export default function OnboardingScreen() {
     <View style={styles.container}>
       <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
         <Text style={styles.skipText}>Skip</Text>
-        <Feather name="chevron-right" size={16} color="#8D153A" />
+        <Feather name="chevron-right" size={16} color="#54c502" />
       </TouchableOpacity>
 
       <ScrollView
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   skipText: {
-    color: '#8D153A',
+    color: '#54c502',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -180,14 +180,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   dotActive: {
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     width: 28,
   },
   nextButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     marginHorizontal: 24,
     marginBottom: 20,
     paddingVertical: 18,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 15,
-    color: '#8D153A',
+    color: '#54c502',
     fontWeight: '700',
   },
 });

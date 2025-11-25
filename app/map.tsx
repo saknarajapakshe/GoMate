@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,
@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
   sheetValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#00534E',
+    color: '#86da18',
   },
   directionsButton: {
-    backgroundColor: '#8D153A',
+    backgroundColor: '#54c502',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
