@@ -1,84 +1,207 @@
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { TransportRoute } from '@/services/api';
+import { toggleFavourite } from '@/store/slices/favouritesSlice';
+import { fetchBuses, fetchDestinations, fetchTrains, setSelectedRoute } from '@/store/slices/transportSlice';
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
+  Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
-const TAB_OPTIONS = ['Buses', 'Trains', 'Destinations'];
+const TAB_OPTIONS = [
+  { label: 'Buses', icon: 'truck' as const },
+  { label: 'Trains', icon: 'navigation' as const },
+  { label: 'Destinations', icon: 'map-pin' as const },
+];
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'Active':
+      return '#00534E';
+    case 'Popular':
+      return '#8D153A';
+    case 'Upcoming':
+      return '#E57200';
+    default:
+      return '#737373';
+  }
+};
+
+const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+  switch (type) {
+    case 'bus':
+      return 'truck';
+    case 'train':
+      return 'navigation';
+    case 'destination':
+      return 'map-pin';
+    default:
+      return 'circle';
+  }
+};
 
 export default function HomeScreen() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState('Buses');
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { buses, trains, destinations, isLoading } = useAppSelector((state) => state.transport);
+  const { items: favourites } = useAppSelector((state) => state.favourites);
+  const { user } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    await Promise.all([
+      dispatch(fetchBuses()),
+      dispatch(fetchTrains()),
+      dispatch(fetchDestinations()),
+    ]);
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  };
+
+  const getCurrentData = (): TransportRoute[] => {
+    switch (activeTab) {
+      case 'Buses':
+        return buses;
+      case 'Trains':
+        return trains;
+      case 'Destinations':
+        return destinations;
+      default:
+        return [];
+    }
+  };
+
+  const handleCardPress = (item: TransportRoute) => {
+    dispatch(setSelectedRoute(item));
+    router.push({ pathname: '/details', params: { id: item.id } });
+  };
+
+  const handleFavouritePress = (item: TransportRoute) => {
+    dispatch(toggleFavourite(item));
+  };
+
+  const isFavourite = (id: string) => {
+    return favourites.some(item => item.id === id);
+  };
+
+  const data = getCurrentData();
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello, Traveler! 👋</Text>
-        <Text style={styles.subtitle}>Where would you like to go today?</Text>
+        <View>
+          <Text style={styles.greeting}>Hello, {user?.name || 'Traveler'}! 👋</Text>
+          <Text style={styles.subtitle}>Where would you like to go today?</Text>
+        </View>
+        <TouchableOpacity onPress={() => router.push('/settings')} style={styles.settingsButton}>
+          <Feather name="settings" size={24} color="#1a1a1a" />
+        </TouchableOpacity>
       </View>
 
+      {/* Tabs */}
       <View style={styles.tabContainer}>
         {TAB_OPTIONS.map((tab) => (
           <TouchableOpacity
-            key={tab}
-            style={[styles.tab, activeTab === tab && styles.tabActive]}
-            onPress={() => setActiveTab(tab)}
+            key={tab.label}
+            style={[styles.tab, activeTab === tab.label && styles.tabActive]}
+            onPress={() => setActiveTab(tab.label)}
           >
-            <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
-              {tab}
+            <Feather 
+              name={tab.icon} 
+              size={16} 
+              color={activeTab === tab.label ? '#ffffff' : '#737373'} 
+              style={styles.tabIcon}
+            />
+            <Text style={[styles.tabText, activeTab === tab.label && styles.tabTextActive]}>
+              {tab.label}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <ScrollView style={styles.content}>
-        <View style={styles.card}>
-          <View style={styles.cardImagePlaceholder}>
-            <Text style={styles.placeholderEmoji}>🚌</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>Colombo - Kandy Express</Text>
-            <Text style={styles.cardDescription}>Direct route via highway</Text>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>Active</Text>
-            </View>
-          </View>
+      {/* Content */}
+      {isLoading && data.length === 0 ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#8D153A" />
+          <Text style={styles.loadingText}>Loading {activeTab.toLowerCase()}...</Text>
         </View>
-
-        <View style={styles.card}>
-          <View style={styles.cardImagePlaceholder}>
-            <Text style={styles.placeholderEmoji}>🚂</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>Ella - Colombo Train</Text>
-            <Text style={styles.cardDescription}>Scenic mountain route</Text>
-            <View style={[styles.badge, styles.badgePopular]}>
-              <Text style={styles.badgeText}>Popular</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <View style={styles.cardImagePlaceholder}>
-            <Text style={styles.placeholderEmoji}>🏖️</Text>
-          </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.cardTitle}>Galle Beach Route</Text>
-            <Text style={styles.cardDescription}>Coastal journey</Text>
-            <View style={[styles.badge, styles.badgeUpcoming]}>
-              <Text style={styles.badgeText}>Upcoming</Text>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-
-      <TouchableOpacity style={styles.fab}>
-        <Text style={styles.fabText}>+</Text>
-      </TouchableOpacity>
+      ) : (
+        <ScrollView
+          style={styles.content}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#8D153A']} />
+          }
+        >
+          {data.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.card}
+              onPress={() => handleCardPress(item)}
+              activeOpacity={0.7}
+            >
+              <Image source={{ uri: item.image }} style={styles.cardImage} />
+              <TouchableOpacity
+                style={styles.favouriteButton}
+                onPress={() => handleFavouritePress(item)}
+              >
+                <Feather
+                  name="heart"
+                  size={20}
+                  color={isFavourite(item.id) ? '#8D153A' : '#ffffff'}
+                />
+              </TouchableOpacity>
+              <View style={styles.cardContent}>
+                <View style={styles.cardHeader}>
+                  <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
+                  <View style={[styles.badge, { backgroundColor: getStatusColor(item.status) }]}>
+                    <Text style={styles.badgeText}>{item.status}</Text>
+                  </View>
+                </View>
+                <Text style={styles.cardDescription} numberOfLines={1}>{item.description}</Text>
+                <View style={styles.cardFooter}>
+                  <View style={styles.typeTag}>
+                    <Feather name={getTypeIcon(item.type)} size={12} color="#8D153A" />
+                    <Text style={styles.typeText}>{item.type}</Text>
+                  </View>
+                  {item.duration && (
+                    <View style={styles.durationTag}>
+                      <Feather name="clock" size={12} color="#737373" />
+                      <Text style={styles.durationText}>{item.duration}</Text>
+                    </View>
+                  )}
+                  {item.rating && (
+                    <View style={styles.ratingTag}>
+                      <Feather name="star" size={12} color="#FDB913" />
+                      <Text style={styles.ratingText}>{item.rating}</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+          <View style={styles.bottomSpacer} />
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -89,6 +212,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 20,
@@ -103,20 +229,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#737373',
   },
+  settingsButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   tabContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   tab: {
-    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
     paddingHorizontal: 16,
-    marginRight: 12,
+    marginRight: 10,
     borderRadius: 20,
     backgroundColor: '#f5f5f5',
   },
   tabActive: {
     backgroundColor: '#8D153A',
+  },
+  tabIcon: {
+    marginRight: 6,
   },
   tabText: {
     fontSize: 14,
@@ -126,81 +265,118 @@ const styles = StyleSheet.create({
   tabTextActive: {
     color: '#ffffff',
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#737373',
+  },
   content: {
     flex: 1,
     paddingHorizontal: 20,
   },
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     marginBottom: 16,
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 8,
   },
-  cardImagePlaceholder: {
+  cardImage: {
+    width: '100%',
     height: 160,
-    backgroundColor: '#FDB913',
+    backgroundColor: '#e0e0e0',
+  },
+  favouriteButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  placeholderEmoji: {
-    fontSize: 60,
   },
   cardContent: {
     padding: 16,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
   cardTitle: {
+    flex: 1,
     fontSize: 18,
     fontWeight: '700',
     color: '#1a1a1a',
-    marginBottom: 4,
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: '#737373',
-    marginBottom: 12,
+    marginRight: 10,
   },
   badge: {
-    alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
-    backgroundColor: '#00534E',
-  },
-  badgePopular: {
-    backgroundColor: '#8D153A',
-  },
-  badgeUpcoming: {
-    backgroundColor: '#E57200',
   },
   badgeText: {
     color: '#ffffff',
     fontSize: 12,
     fontWeight: '600',
   },
-  fab: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#FDB913',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+  cardDescription: {
+    fontSize: 14,
+    color: '#737373',
+    marginBottom: 12,
   },
-  fabText: {
-    fontSize: 32,
+  cardFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  typeTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    backgroundColor: 'rgba(141, 21, 58, 0.1)',
+  },
+  typeText: {
+    marginLeft: 4,
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#8D153A',
+    textTransform: 'capitalize',
+  },
+  durationTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  durationText: {
+    marginLeft: 4,
+    fontSize: 12,
+    color: '#737373',
+  },
+  ratingTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    marginLeft: 4,
+    fontSize: 12,
+    fontWeight: '600',
     color: '#1a1a1a',
-    fontWeight: '300',
+  },
+  bottomSpacer: {
+    height: 20,
   },
 });
