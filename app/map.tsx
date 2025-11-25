@@ -1,7 +1,7 @@
+import { useAppSelector } from '@/hooks/useRedux';
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { useAppSelector } from '@/hooks/useRedux';
 
 export default function MapScreen() {
   const router = useRouter();
