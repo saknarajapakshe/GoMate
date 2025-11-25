@@ -1,50 +1,65 @@
+import { useAppSelector } from '@/hooks/useRedux';
+import { Feather } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const isDarkMode = useAppSelector((state) => state.theme?.isDarkMode ?? false);
   const primaryColor = '#8D153A';
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: primaryColor,
+        tabBarInactiveTintColor: isDarkMode ? '#737373' : '#a0a0a0',
         headerShown: false,
-        tabBarButton: (props) => <HapticTab {...(props as any)} />,
         tabBarStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#0a0a0a' : '#ffffff',
+          backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
+          borderTopColor: isDarkMode ? '#1a1a1a' : '#f0f0f0',
+          height: Platform.OS === 'ios' ? 85 : 65,
+          paddingTop: 8,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
         },
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <Feather name="home" size={22} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: 'Search',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <Feather name="search" size={22} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="favourites"
         options={{
           title: 'Favourites',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="heart.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <Feather name="heart" size={22} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <Feather name="user" size={22} color={color} />
+          ),
         }}
       />
     </Tabs>
