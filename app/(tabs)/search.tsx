@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import {
-=======
+
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
@@ -12,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
->>>>>>> Stashed changes
+
   Image,
   ScrollView,
   StyleSheet,
@@ -23,55 +19,7 @@ import {
 } from 'react-native';
 
 const FILTER_OPTIONS = [
-<<<<<<< Updated upstream
-  { label: 'All', icon: '⊕' },
-  { label: 'Popular', icon: '📈' },
-  { label: 'Nearby', icon: '📍' },
-  { label: 'Timetables', icon: '🕐' },
-];
 
-const QUICK_RESULTS = [
-  {
-    id: 1,
-    title: 'Route 138 - Colombo → Fort',
-    subtitle: 'Express service',
-    type: 'bus',
-    status: 'Active',
-    statusColor: '#00534E',
-    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=200&h=200&fit=crop',
-  },
-  {
-    id: 2,
-    title: 'Colombo → Kandy Express',
-    subtitle: 'First class available',
-    type: 'train',
-    status: 'Popular',
-    statusColor: '#E57200',
-    image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=200&h=200&fit=crop',
-  },
-  {
-    id: 3,
-    title: 'Colombo City Centre',
-    subtitle: 'Shopping & entertainment',
-    type: 'destination',
-    status: 'Popular',
-    statusColor: '#E57200',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop',
-  },
-  {
-    id: 4,
-    title: 'Galle Fort Heritage',
-    subtitle: 'UNESCO World Heritage Site',
-    type: 'destination',
-    status: 'Popular',
-    statusColor: '#E57200',
-    image: 'https://images.unsplash.com/photo-1586016413664-864c0dd76f53?w=200&h=200&fit=crop',
-  },
-];
-
-export default function SearchScreen() {
-  const router = useRouter();
-=======
   { label: 'All', icon: 'grid' as const },
   { label: 'Popular', icon: 'trending-up' as const },
   { label: 'Nearby', icon: 'map-pin' as const },
@@ -107,7 +55,7 @@ const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
 export default function SearchScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
->>>>>>> Stashed changes
+
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -146,22 +94,18 @@ export default function SearchScreen() {
       <View style={styles.header}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-<<<<<<< Updated upstream
-            <Text style={styles.backIcon}>←</Text>
-=======
+
             <Feather name="arrow-left" size={20} color="#ffffff" />
->>>>>>> Stashed changes
+
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Search</Text>
         </View>
         
         {/* Search Input */}
         <View style={styles.searchInputContainer}>
-<<<<<<< Updated upstream
-          <Text style={styles.searchIcon}>🔍</Text>
-=======
+
           <Feather name="search" size={18} color="#999" style={styles.searchIcon} />
->>>>>>> Stashed changes
+
           <TextInput
             style={styles.searchInput}
             placeholder="Search routes, destinations..."
@@ -169,14 +113,13 @@ export default function SearchScreen() {
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
-<<<<<<< Updated upstream
-=======
+
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={() => setSearchQuery('')}>
               <Feather name="x" size={18} color="#999" />
             </TouchableOpacity>
           )}
->>>>>>> Stashed changes
+
         </View>
       </View>
 
@@ -190,21 +133,7 @@ export default function SearchScreen() {
         {FILTER_OPTIONS.map((filter) => (
           <TouchableOpacity
             key={filter.label}
-<<<<<<< Updated upstream
-            style={[
-              styles.filterChip,
-              activeFilter === filter.label && styles.filterChipActive,
-            ]}
-            onPress={() => setActiveFilter(filter.label)}
-          >
-            <Text style={styles.filterIcon}>{filter.icon}</Text>
-            <Text
-              style={[
-                styles.filterText,
-                activeFilter === filter.label && styles.filterTextActive,
-              ]}
-            >
-=======
+
             style={[styles.filterChip, activeFilter === filter.label && styles.filterChipActive]}
             onPress={() => setActiveFilter(filter.label)}
           >
@@ -215,17 +144,16 @@ export default function SearchScreen() {
               style={styles.filterIcon}
             />
             <Text style={[styles.filterText, activeFilter === filter.label && styles.filterTextActive]}>
->>>>>>> Stashed changes
+
               {filter.label}
             </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
-<<<<<<< Updated upstream
-=======
+
       {/* Results */}
->>>>>>> Stashed changes
+
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* View Map Banner */}
         <TouchableOpacity style={styles.mapBanner} onPress={() => router.push('/map')}>
@@ -234,34 +162,7 @@ export default function SearchScreen() {
             <Text style={styles.mapBannerSubtitle}>See all routes and stops on the map</Text>
           </View>
           <View style={styles.mapIconContainer}>
-<<<<<<< Updated upstream
-            <Text style={styles.mapIcon}>🧭</Text>
-          </View>
-        </TouchableOpacity>
 
-        {/* Quick Results */}
-        <Text style={styles.sectionTitle}>Quick Results</Text>
-
-        {QUICK_RESULTS.map((item) => (
-          <TouchableOpacity key={item.id} style={styles.resultCard}>
-            <Image source={{ uri: item.image }} style={styles.resultImage} />
-            <View style={styles.resultContent}>
-              <View style={styles.resultHeader}>
-                <Text style={styles.resultTitle} numberOfLines={1}>
-                  {item.title}
-                </Text>
-                <View style={[styles.statusBadge, { backgroundColor: item.statusColor }]}>
-                  <Text style={styles.statusText}>{item.status}</Text>
-                </View>
-              </View>
-              <Text style={styles.resultSubtitle}>{item.subtitle}</Text>
-              <View style={styles.typeBadge}>
-                <Text style={styles.typeText}>{item.type}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
-=======
             <Feather name="map" size={24} color="#ffffff" />
           </View>
         </TouchableOpacity>
@@ -320,7 +221,7 @@ export default function SearchScreen() {
           ))
         )}
         <View style={styles.bottomSpacer} />
->>>>>>> Stashed changes
+
       </ScrollView>
     </View>
   );
@@ -336,11 +237,8 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
-<<<<<<< Updated upstream
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-=======
->>>>>>> Stashed changes
+
+
   },
   headerTop: {
     flexDirection: 'row',
@@ -356,13 +254,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 12,
   },
-<<<<<<< Updated upstream
-  backIcon: {
-    fontSize: 20,
-    color: '#ffffff',
-  },
-=======
->>>>>>> Stashed changes
+
+
   headerTitle: {
     fontSize: 24,
     fontWeight: '700',
@@ -377,10 +270,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   searchIcon: {
-<<<<<<< Updated upstream
-    fontSize: 18,
-=======
->>>>>>> Stashed changes
+
+
     marginRight: 10,
   },
   searchInput: {
@@ -389,15 +280,7 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
   },
   filterContainer: {
-<<<<<<< Updated upstream
-    marginTop: 12,
-    marginBottom: 2,
-    maxHeight: 40,
-  },
-  filterContent: {
-    paddingHorizontal: 16,
-    paddingRight: 20,
-=======
+
     flexGrow: 0,
     marginTop: 16,
     marginBottom: 12,
@@ -407,20 +290,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
->>>>>>> Stashed changes
+
   },
   filterChip: {
     flexDirection: 'row',
     alignItems: 'center',
-<<<<<<< Updated upstream
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    marginRight: 8,
-=======
+
     justifyContent: 'center',
     paddingHorizontal: 12,
     paddingVertical: 6,
@@ -428,28 +303,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#d0d0d0',
->>>>>>> Stashed changes
+
   },
   filterChipActive: {
     backgroundColor: '#8D153A',
     borderColor: '#8D153A',
   },
   filterIcon: {
-<<<<<<< Updated upstream
-    fontSize: 14,
-    marginRight: 4,
-=======
+
     marginRight: 5,
->>>>>>> Stashed changes
+
   },
   filterText: {
     fontSize: 13,
     fontWeight: '500',
-<<<<<<< Updated upstream
-    color: '#1a1a1a',
-=======
+
     color: '#333333',
->>>>>>> Stashed changes
+
   },
   filterTextActive: {
     color: '#ffffff',
@@ -486,67 +356,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-<<<<<<< Updated upstream
-  mapIcon: {
-    fontSize: 24,
-=======
+
   resultsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
->>>>>>> Stashed changes
+
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-<<<<<<< Updated upstream
-    color: '#1a1a1a',
-    marginBottom: 16,
-  },
-  resultCard: {
-    flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    marginBottom: 12,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#f0f0f0',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  resultImage: {
-    width: 90,
-    height: 100,
-    backgroundColor: '#e0e0e0',
-  },
-  resultContent: {
-    flex: 1,
-    padding: 12,
-    justifyContent: 'center',
-  },
-  resultHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  resultTitle: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1a1a1a',
-    marginRight: 8,
-  },
-  statusBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-=======
+
     color: '#1a1a1a',
   },
   resultsCount: {
@@ -639,36 +460,15 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 10,
   },
->>>>>>> Stashed changes
+
   statusText: {
     fontSize: 11,
     fontWeight: '600',
     color: '#ffffff',
   },
-<<<<<<< Updated upstream
-  resultSubtitle: {
-    fontSize: 13,
-    color: '#737373',
-    marginBottom: 8,
-  },
-  typeBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  typeText: {
-    fontSize: 11,
-    fontWeight: '500',
-    color: '#1a1a1a',
-  },
-});
-=======
+
   bottomSpacer: {
     height: 20,
   },
 });
->>>>>>> Stashed changes
+
