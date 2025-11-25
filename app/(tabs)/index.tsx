@@ -4,6 +4,7 @@ import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { fetchBuses, fetchDestinations, fetchTrains, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -18,9 +19,9 @@ import {
 } from 'react-native';
 
 const TAB_OPTIONS = [
-  { label: 'Buses', icon: 'truck' as const },
-  { label: 'Trains', icon: 'navigation' as const },
-  { label: 'Destinations', icon: 'map-pin' as const },
+  { label: 'Buses', icon: 'bus' as const, type: 'fa5' as const },
+  { label: 'Trains', icon: 'train' as const, type: 'fa5' as const },
+  { label: 'Destinations', icon: 'map-pin' as const, type: 'feather' as const },
 ];
 
 const getStatusColor = (status: string) => {
@@ -36,16 +37,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
@@ -129,12 +130,21 @@ export default function HomeScreen() {
             style={[styles.tab, activeTab === tab.label && styles.tabActive]}
             onPress={() => setActiveTab(tab.label)}
           >
-            <Feather 
-              name={tab.icon} 
-              size={16} 
-              color={activeTab === tab.label ? '#ffffff' : '#737373'} 
-              style={styles.tabIcon}
-            />
+            {tab.type === 'fa5' ? (
+              <FontAwesome5 
+                name={tab.icon} 
+                size={14} 
+                color={activeTab === tab.label ? '#ffffff' : '#737373'} 
+                style={styles.tabIcon}
+              />
+            ) : (
+              <Feather 
+                name={tab.icon as any} 
+                size={16} 
+                color={activeTab === tab.label ? '#ffffff' : '#737373'} 
+                style={styles.tabIcon}
+              />
+            )}
             <Text style={[styles.tabText, activeTab === tab.label && styles.tabTextActive]}>
               {tab.label}
             </Text>
@@ -184,7 +194,11 @@ export default function HomeScreen() {
                 <Text style={styles.cardDescription} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.cardFooter}>
                   <View style={styles.typeTag}>
-                    <Feather name={getTypeIcon(item.type)} size={12} color="#37ab30" />
+                    {getTypeIcon(item.type).type === 'fa5' ? (
+                      <FontAwesome5 name={getTypeIcon(item.type).name as any} size={10} color="#37ab30" />
+                    ) : (
+                      <Feather name={getTypeIcon(item.type).name as any} size={12} color="#37ab30" />
+                    )}
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   {item.duration && (

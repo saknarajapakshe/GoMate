@@ -5,6 +5,7 @@ import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { searchRoutes, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -40,16 +41,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
@@ -213,7 +214,11 @@ export default function SearchScreen() {
                 <Text style={styles.resultSubtitle} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.resultFooter}>
                   <View style={styles.typeBadge}>
-                    <Feather name={getTypeIcon(item.type)} size={10} color="#37ab30" />
+                    {getTypeIcon(item.type).type === 'fa5' ? (
+                      <FontAwesome5 name={getTypeIcon(item.type).name as any} size={9} color="#37ab30" />
+                    ) : (
+                      <Feather name={getTypeIcon(item.type).name as any} size={10} color="#37ab30" />
+                    )}
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -271,7 +276,8 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
     backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 12,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 1,
+    height: 50,
   },
   searchIcon: {
 

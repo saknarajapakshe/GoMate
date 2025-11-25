@@ -3,16 +3,17 @@ import { TransportRoute } from '@/services/api';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { fetchRouteById } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import {
-    ActivityIndicator,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const getStatusColor = (status: string) => {
@@ -28,16 +29,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
@@ -96,7 +97,11 @@ export default function DetailsScreen() {
           <View style={styles.header}>
             <View style={styles.headerLeft}>
               <View style={styles.typeContainer}>
-                <Feather name={getTypeIcon(selectedRoute.type)} size={16} color="#37ab30" />
+                {getTypeIcon(selectedRoute.type).type === 'fa5' ? (
+                  <FontAwesome5 name={getTypeIcon(selectedRoute.type).name as any} size={14} color="#37ab30" />
+                ) : (
+                  <Feather name={getTypeIcon(selectedRoute.type).name as any} size={16} color="#37ab30" />
+                )}
                 <Text style={styles.typeText}>{selectedRoute.type}</Text>
               </View>
               <Text style={styles.title}>{selectedRoute.title}</Text>
