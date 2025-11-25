@@ -160,7 +160,7 @@ export default function ProfileScreen() {
       {/* App Version */}
       <View style={styles.versionContainer}>
         <Text style={styles.versionText}>GoMate v1.0.0</Text>
-        <Text style={styles.copyrightText}>© 2025 GoMate Sri Lanka</Text>
+        <Text style={styles.copyrightText}>© 2025 GoMate UK</Text>
       </View>
     </ScrollView>
   );
