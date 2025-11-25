@@ -1,16 +1,19 @@
+import { useAppSelector } from '@/hooks/useRedux';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, View } from 'react-native';
 import 'react-native-reanimated';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import '../global.css';
+import { persistor, store } from '../store';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+function RootLayoutNav() {
+  const isDarkMode = useAppSelector((state) => state.theme.isDarkMode);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={isDarkMode ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
@@ -22,7 +25,25 @@ export default function RootLayout() {
         <Stack.Screen name="settings" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style={isDarkMode ? 'light' : 'dark'} />
     </ThemeProvider>
+  );
+}
+
+function LoadingScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8D153A' }}>
+      <ActivityIndicator size="large" color="#FDB913" />
+    </View>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+        <RootLayoutNav />
+      </PersistGate>
+    </Provider>
   );
 }
