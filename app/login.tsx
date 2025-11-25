@@ -73,7 +73,7 @@ export default function LoginScreen() {
         keyboardShouldPersistTaps="handled"
       >
         {/* Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/')}>
           <Feather name="arrow-left" size={24} color="#1a1a1a" />
         </TouchableOpacity>
 
