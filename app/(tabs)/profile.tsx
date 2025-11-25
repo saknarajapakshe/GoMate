@@ -138,7 +138,7 @@ export default function ProfileScreen() {
           onPress={() => router.push('/settings')}
         >
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#737373' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="settings" size={18} color="#ffffff" />
             </View>
             <Text style={styles.settingLabel}>Settings</Text>
