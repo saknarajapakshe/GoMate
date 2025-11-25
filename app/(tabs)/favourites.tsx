@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { RootState } from '@/store';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { removeFavourite } from '@/store/slices/favouritesSlice';
 import { setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
