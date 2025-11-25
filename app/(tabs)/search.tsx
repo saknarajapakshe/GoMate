@@ -167,8 +167,7 @@ export default function SearchScreen() {
             <Text style={styles.mapBannerSubtitle}>See all routes and stops on the map</Text>
           </View>
           <View style={styles.mapIconContainer}>
-
-            <Feather name="map" size={24} color="#ffffff" />
+            <Feather name="map-pin" size={24} color="#ffffff" />
           </View>
         </TouchableOpacity>
 

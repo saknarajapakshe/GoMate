@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { RootState } from '@/store';
 import { addFavourite } from '@/store/slices/favouritesSlice';
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -247,7 +248,7 @@ export default function MapScreen() {
       </MapView>
 
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <Text style={styles.backIcon}>←</Text>
+        <Feather name="arrow-left" size={24} color={isDarkMode ? '#ffffff' : '#1a1a1a'} />
       </TouchableOpacity>
 
       {/* Bottom Sheet - From/To Input or Route Results */}
@@ -429,10 +430,6 @@ const getStyles = (isDarkMode: boolean) =>
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-    },
-    backIcon: {
-      fontSize: 24,
-      color: isDarkMode ? '#ffffff' : '#1a1a1a',
     },
     bottomSheet: {
       position: 'absolute',
