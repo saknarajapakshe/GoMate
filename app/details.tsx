@@ -189,7 +189,7 @@ export default function DetailsScreen() {
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Schedule</Text>
               <View style={styles.scheduleGrid}>
-                {selectedRoute.schedule.map((time, index) => (
+                {selectedRoute.schedule.map((time: string, index: number) => (
                   <View key={index} style={styles.scheduleItem}>
                     <Feather name="clock" size={14} color="#737373" />
                     <Text style={styles.scheduleTime}>{time}</Text>

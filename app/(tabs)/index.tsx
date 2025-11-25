@@ -117,9 +117,7 @@ export default function HomeScreen() {
           <Text style={styles.greeting}>Hello, {user?.name || 'Traveler'}! 👋</Text>
           <Text style={styles.subtitle}>Where would you like to go today?</Text>
         </View>
-        <TouchableOpacity onPress={() => router.push('/settings')} style={styles.settingsButton}>
-          <Feather name="settings" size={24} color="#ffffff" />
-        </TouchableOpacity>
+        
       </View>
 
       {/* Tabs */}
@@ -232,7 +230,7 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   header: {
     backgroundColor: '#37ab30',
     paddingTop: 55,
-    paddingBottom: 30,
+    paddingBottom: 35,
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',

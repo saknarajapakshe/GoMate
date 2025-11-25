@@ -135,22 +135,23 @@ export default function FavouritesScreen() {
 const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   header: {
+    backgroundColor: '#37ab30',
     paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
+    paddingTop: 55,
+    paddingBottom: 35,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '700',
-    color: isDarkMode ? '#ffffff' : '#1a1a1a',
+    color: '#ffffff',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: isDarkMode ? '#a0a0a0' : '#737373',
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   countText: {
     fontSize: 14,
@@ -160,6 +161,8 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
+    paddingTop: 16,
   },
   card: {
     flexDirection: 'row',
@@ -252,6 +255,7 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 40,
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   emptyIconContainer: {
     width: 120,

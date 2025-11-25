@@ -176,7 +176,7 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   header: {
     backgroundColor: '#37ab30',
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: 55,
     paddingBottom: 30,
     paddingHorizontal: 20,
   },

@@ -243,11 +243,9 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   },
   header: {
     backgroundColor: '#37ab30',
-    paddingTop: 50,
-    paddingBottom: 20,
+    paddingTop: 55,
+    paddingBottom: 30,
     paddingHorizontal: 20,
-
-
   },
   headerTop: {
     flexDirection: 'row',
