@@ -1,20 +1,21 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { clearError, register as registerUser } from '@/store/slices/authSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import * as yup from 'yup';
 
@@ -112,7 +113,9 @@ export default function RegisterScreen() {
 
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Feather name="user-plus" size={40} color="#ffffff" />
+            <View style={styles.iconCircle}>
+              <FontAwesome5 name="bus" size={40} color="#37ab30" />
+            </View>
           </View>
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Join GoMate and start your journey</Text>
@@ -356,13 +359,17 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   logoContainer: {
+    marginBottom: 20,
+  },
+  iconCircle: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#37ab30',
+    backgroundColor: 'rgba(55, 171, 48, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    borderWidth: 2,
+    borderColor: '#37ab30',
   },
   title: {
     fontSize: 28,

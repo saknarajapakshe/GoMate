@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { clearError, login } from '@/store/slices/authSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -78,7 +79,9 @@ export default function LoginScreen() {
 
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Text style={styles.logoText}>GoMate</Text>
+            <View style={styles.iconCircle}>
+              <FontAwesome5 name="bus" size={50} color="#37ab30" />
+            </View>
           </View>
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Sign in to continue your journey</Text>
@@ -220,18 +223,17 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   logoContainer: {
+    marginBottom: 24,
+  },
+  iconCircle: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#37ab30',
+    backgroundColor: 'rgba(55, 171, 48, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 24,
-  },
-  logoText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#ffffff',
+    borderWidth: 2,
+    borderColor: '#37ab30',
   },
   title: {
     fontSize: 28,

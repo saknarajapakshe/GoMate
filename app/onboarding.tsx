@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -9,7 +10,7 @@ const slides = [
   {
     title: 'Explore Public Transport',
     description: 'Find buses, trains, and destinations across the UK with ease',
-    icon: 'compass' as const,
+    icon: 'truck' as const,
     bgColor: '#37ab30',
   },
   {
@@ -71,7 +72,11 @@ export default function OnboardingScreen() {
         {slides.map((slide, index) => (
           <View key={index} style={[styles.slide, { width }]}>
             <View style={[styles.iconContainer, { backgroundColor: slide.bgColor }]}>
-              <Feather name={slide.icon} size={60} color="#ffffff" />
+              {slide.icon === 'truck' ? (
+                <FontAwesome5 name="bus" size={60} color="#ffffff" />
+              ) : (
+                <Feather name={slide.icon} size={60} color="#ffffff" />
+              )}
             </View>
             <Text style={styles.title}>{slide.title}</Text>
             <Text style={styles.description}>{slide.description}</Text>
