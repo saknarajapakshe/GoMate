@@ -87,14 +87,6 @@ export default function LoginScreen() {
           <Text style={styles.subtitle}>Sign in to continue your journey</Text>
         </View>
 
-        {/* Demo Account Info */}
-        <View style={styles.demoInfo}>
-          <Feather name="info" size={16} color="#37ab30" />
-          <Text style={styles.demoText}>
-            Demo: username: <Text style={styles.demoBold}>emilys</Text>, password: <Text style={styles.demoBold}>emilyspass</Text>
-          </Text>
-        </View>
-
         {error && (
           <View style={styles.errorContainer}>
             <Feather name="alert-circle" size={18} color="#37ab30" />
