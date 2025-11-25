@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
 import { removeFavourite } from '@/store/slices/favouritesSlice';
 import { setSelectedRoute } from '@/store/slices/transportSlice';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 

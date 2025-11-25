@@ -22,6 +22,8 @@ export default function ProfileScreen() {
     dispatch(toggleDarkMode());
   };
 
+  const styles = getStyles(isDarkMode);
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
@@ -166,10 +168,10 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
   },
   header: {
     backgroundColor: '#37ab30',
@@ -237,13 +239,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f8f8',
     borderRadius: 16,
   },
   statNumber: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginTop: 8,
     marginBottom: 2,
   },
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: isDarkMode ? '#1a1a1a' : '#f0f0f0',
   },
   settingLeft: {
     flexDirection: 'row',
@@ -285,7 +287,7 @@ const styles = StyleSheet.create({
   },
   settingLabel: {
     fontSize: 16,
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
   },
   settingRight: {
     flexDirection: 'row',

@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { fetchBuses, fetchDestinations, fetchTrains, setSelectedRoute } from '@/store/slices/transportSlice';
-import { Feather } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -57,6 +57,9 @@ export default function HomeScreen() {
   const { buses, trains, destinations, isLoading } = useAppSelector((state) => state.transport);
   const { items: favourites } = useAppSelector((state) => state.favourites);
   const { user } = useAppSelector((state) => state.auth);
+  const { isDarkMode } = useAppSelector((state) => state.theme);
+
+  const styles = getStyles(isDarkMode);
 
   useEffect(() => {
     loadData();
@@ -206,10 +209,10 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   header: {
     backgroundColor: '#37ab30',
@@ -243,7 +246,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 16,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   tab: {
     flexDirection: 'row',
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginRight: 10,
     borderRadius: 24,
-    backgroundColor: '#e8e8e8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#e8e8e8',
   },
   tabActive: {
     backgroundColor: '#37ab30',
@@ -281,16 +284,16 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
     paddingTop: 16,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 20,
     marginBottom: 16,
     overflow: 'hidden',
@@ -329,7 +332,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginRight: 10,
   },
   badge: {
@@ -345,7 +348,7 @@ const styles = StyleSheet.create({
   },
   cardDescription: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginBottom: 12,
   },
   cardFooter: {

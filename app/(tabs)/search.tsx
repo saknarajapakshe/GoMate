@@ -61,6 +61,9 @@ export default function SearchScreen() {
 
   const { searchResults, isLoading } = useAppSelector((state) => state.transport);
   const { items: favourites } = useAppSelector((state) => state.favourites);
+  const { isDarkMode } = useAppSelector((state) => state.theme);
+
+  const styles = getStyles(isDarkMode);
 
   useEffect(() => {
     // Load initial data
@@ -227,10 +230,10 @@ export default function SearchScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
   },
   header: {
     backgroundColor: '#37ab30',
@@ -264,7 +267,7 @@ const styles = StyleSheet.create({
   searchInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -277,7 +280,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
   },
   filterContainer: {
 
@@ -300,9 +303,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 18,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderWidth: 1,
-    borderColor: '#d0d0d0',
+    borderColor: isDarkMode ? '#333333' : '#d0d0d0',
 
   },
   filterChipActive: {
@@ -318,7 +321,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
 
-    color: '#333333',
+    color: isDarkMode ? '#a0a0a0' : '#333333',
 
   },
   filterTextActive: {
@@ -368,11 +371,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
 
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
   },
   resultsCount: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
   },
   loadingContainer: {
     paddingVertical: 40,
@@ -385,22 +388,22 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginTop: 16,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginTop: 4,
   },
   resultCard: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 16,
     marginBottom: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: isDarkMode ? '#333333' : '#f0f0f0',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -410,7 +413,7 @@ const styles = StyleSheet.create({
   resultImage: {
     width: 100,
     height: 100,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: isDarkMode ? '#2a2a2a' : '#e0e0e0',
   },
   resultContent: {
     flex: 1,
@@ -427,12 +430,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginRight: 8,
   },
   resultSubtitle: {
     fontSize: 13,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginBottom: 8,
   },
   resultFooter: {
