@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window');
 const slides = [
   {
     title: 'Explore Public Transport',
-    description: 'Find buses, trains, and destinations across Sri Lanka with ease',
+    description: 'Find buses, trains, and destinations across the UK with ease',
     icon: 'compass' as const,
     bgColor: '#37ab30',
   },

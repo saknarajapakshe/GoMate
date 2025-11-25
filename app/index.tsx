@@ -29,7 +29,7 @@ export default function SplashScreen() {
       </View>
 
       <Text style={styles.title}>GoMate</Text>
-      <Text style={styles.subtitle}>Your Travel Companion in Sri Lanka</Text>
+      <Text style={styles.subtitle}>Your Travel Companion in the UK</Text>
 
       <View style={styles.taglineContainer}>
         <View style={styles.taglineItem}>
