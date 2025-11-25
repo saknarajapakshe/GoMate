@@ -1,8 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { removeFavourite } from '@/store/slices/favouritesSlice';
 import { setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -19,24 +21,24 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
 export default function FavouritesScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 
@@ -90,7 +92,11 @@ export default function FavouritesScreen() {
               <View style={styles.cardContent}>
                 <View style={styles.cardHeader}>
                   <View style={styles.typeContainer}>
-                    <Feather name={getTypeIcon(item.type)} size={12} color="#37ab30" />
+                    {getTypeIcon(item.type).type === 'fa5' ? (
+                      <FontAwesome5 name={getTypeIcon(item.type).name as any} size={10} color="#37ab30" />
+                    ) : (
+                      <Feather name={getTypeIcon(item.type).name as any} size={12} color="#37ab30" />
+                    )}
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -129,22 +135,23 @@ export default function FavouritesScreen() {
 const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   header: {
+    backgroundColor: '#37ab30',
     paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
+    paddingTop: 55,
+    paddingBottom: 35,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '700',
-    color: isDarkMode ? '#ffffff' : '#1a1a1a',
+    color: '#ffffff',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: isDarkMode ? '#a0a0a0' : '#737373',
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   countText: {
     fontSize: 14,
@@ -154,6 +161,8 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
+    paddingTop: 16,
   },
   card: {
     flexDirection: 'row',
@@ -246,6 +255,7 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 40,
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
   },
   emptyIconContainer: {
     width: 120,

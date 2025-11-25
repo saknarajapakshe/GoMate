@@ -1,11 +1,12 @@
 import { useAppSelector } from '@/hooks/useRedux';
+import { RootState } from '@/store';
 import { Feather } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
 export default function TabLayout() {
-  const isDarkMode = useAppSelector((state) => state.theme?.isDarkMode ?? false);
+  const isDarkMode = useAppSelector((state: RootState) => state.theme?.isDarkMode ?? false);
   const primaryColor = '#37ab30';
 
   return (
@@ -30,7 +31,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }: { color: string; focused: boolean }) => (
             <Feather name="home" size={22} color={color} />
           ),
         }}
@@ -39,7 +40,7 @@ export default function TabLayout() {
         name="search"
         options={{
           title: 'Search',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }: { color: string; focused: boolean }) => (
             <Feather name="search" size={22} color={color} />
           ),
         }}
@@ -48,7 +49,7 @@ export default function TabLayout() {
         name="favourites"
         options={{
           title: 'Favourites',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }: { color: string; focused: boolean }) => (
             <Feather name="heart" size={22} color={color} />
           ),
         }}
@@ -57,7 +58,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ color }: { color: string; focused: boolean }) => (
             <Feather name="user" size={22} color={color} />
           ),
         }}

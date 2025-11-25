@@ -1,9 +1,11 @@
 
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { searchRoutes, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -39,16 +41,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
@@ -59,9 +61,9 @@ export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const { searchResults, isLoading } = useAppSelector((state) => state.transport);
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { searchResults, isLoading } = useAppSelector((state: RootState) => state.transport);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 
@@ -165,8 +167,7 @@ export default function SearchScreen() {
             <Text style={styles.mapBannerSubtitle}>See all routes and stops on the map</Text>
           </View>
           <View style={styles.mapIconContainer}>
-
-            <Feather name="map" size={24} color="#ffffff" />
+            <Feather name="map-pin" size={24} color="#ffffff" />
           </View>
         </TouchableOpacity>
 
@@ -189,7 +190,7 @@ export default function SearchScreen() {
             <Text style={styles.emptySubtext}>Try a different search term</Text>
           </View>
         ) : (
-          searchResults.map((item) => (
+          searchResults.map((item: TransportRoute) => (
             <TouchableOpacity
               key={item.id}
               style={styles.resultCard}
@@ -212,7 +213,11 @@ export default function SearchScreen() {
                 <Text style={styles.resultSubtitle} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.resultFooter}>
                   <View style={styles.typeBadge}>
-                    <Feather name={getTypeIcon(item.type)} size={10} color="#37ab30" />
+                    {getTypeIcon(item.type).type === 'fa5' ? (
+                      <FontAwesome5 name={getTypeIcon(item.type).name as any} size={9} color="#37ab30" />
+                    ) : (
+                      <Feather name={getTypeIcon(item.type).name as any} size={10} color="#37ab30" />
+                    )}
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -237,11 +242,9 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   },
   header: {
     backgroundColor: '#37ab30',
-    paddingTop: 50,
-    paddingBottom: 20,
+    paddingTop: 55,
+    paddingBottom: 30,
     paddingHorizontal: 20,
-
-
   },
   headerTop: {
     flexDirection: 'row',
@@ -270,7 +273,8 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
     backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 12,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 1,
+    height: 50,
   },
   searchIcon: {
 

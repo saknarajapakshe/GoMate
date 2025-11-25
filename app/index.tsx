@@ -1,5 +1,6 @@
 import { useAppSelector } from '@/hooks/useRedux';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
@@ -15,7 +16,7 @@ export default function SplashScreen() {
       } else {
         router.replace('/onboarding');
       }
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [isAuthenticated]);
@@ -24,29 +25,12 @@ export default function SplashScreen() {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <View style={styles.iconCircle}>
-          <Feather name="compass" size={60} color="#37ab30" />
+          <FontAwesome5 name="bus" size={80} color="#FFFFFF" />
         </View>
       </View>
 
       <Text style={styles.title}>GoMate</Text>
-      <Text style={styles.subtitle}>Your Travel Companion in Sri Lanka</Text>
-
-      <View style={styles.taglineContainer}>
-        <View style={styles.taglineItem}>
-          <Feather name="truck" size={16} color="rgba(255, 255, 255, 0.7)" />
-          <Text style={styles.taglineText}>Buses</Text>
-        </View>
-        <View style={styles.taglineDot} />
-        <View style={styles.taglineItem}>
-          <Feather name="navigation" size={16} color="rgba(255, 255, 255, 0.7)" />
-          <Text style={styles.taglineText}>Trains</Text>
-        </View>
-        <View style={styles.taglineDot} />
-        <View style={styles.taglineItem}>
-          <Feather name="map-pin" size={16} color="rgba(255, 255, 255, 0.7)" />
-          <Text style={styles.taglineText}>Places</Text>
-        </View>
-      </View>
+      
 
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color="rgba(255, 255, 255, 0.8)" />
@@ -66,14 +50,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   iconCircle: {
-    width: 128,
-    height: 128,
-    borderRadius: 64,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: 'rgba(253, 185, 19, 0.3)',
+    borderWidth: 4,
+    borderColor: 'rgba(255, 165, 0, 0.3)',
   },
   title: {
     color: '#ffffff',

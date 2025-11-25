@@ -1,8 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { fetchBuses, fetchDestinations, fetchTrains, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import {
@@ -17,9 +19,9 @@ import {
 } from 'react-native';
 
 const TAB_OPTIONS = [
-  { label: 'Buses', icon: 'truck' as const },
-  { label: 'Trains', icon: 'navigation' as const },
-  { label: 'Destinations', icon: 'map-pin' as const },
+  { label: 'Buses', icon: 'bus' as const, type: 'fa5' as const },
+  { label: 'Trains', icon: 'train' as const, type: 'fa5' as const },
+  { label: 'Destinations', icon: 'map-pin' as const, type: 'feather' as const },
 ];
 
 const getStatusColor = (status: string) => {
@@ -35,16 +37,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+const getTypeIcon = (type: string) => {
   switch (type) {
     case 'bus':
-      return 'truck';
+      return { name: 'bus', type: 'fa5' };
     case 'train':
-      return 'navigation';
+      return { name: 'train', type: 'fa5' };
     case 'destination':
-      return 'map-pin';
+      return { name: 'map-pin', type: 'feather' };
     default:
-      return 'circle';
+      return { name: 'circle', type: 'feather' };
   }
 };
 
@@ -54,10 +56,10 @@ export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState('Buses');
   const [refreshing, setRefreshing] = useState(false);
 
-  const { buses, trains, destinations, isLoading } = useAppSelector((state) => state.transport);
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { user } = useAppSelector((state) => state.auth);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { buses, trains, destinations, isLoading } = useAppSelector((state: RootState) => state.transport);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { user } = useAppSelector((state: RootState) => state.auth);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 
@@ -102,7 +104,7 @@ export default function HomeScreen() {
   };
 
   const isFavourite = (id: string) => {
-    return favourites.some(item => item.id === id);
+    return favourites.some((item: { id: string }) => item.id === id);
   };
 
   const data = getCurrentData();
@@ -115,9 +117,7 @@ export default function HomeScreen() {
           <Text style={styles.greeting}>Hello, {user?.name || 'Traveler'}! 👋</Text>
           <Text style={styles.subtitle}>Where would you like to go today?</Text>
         </View>
-        <TouchableOpacity onPress={() => router.push('/settings')} style={styles.settingsButton}>
-          <Feather name="settings" size={24} color="#ffffff" />
-        </TouchableOpacity>
+        
       </View>
 
       {/* Tabs */}
@@ -128,12 +128,21 @@ export default function HomeScreen() {
             style={[styles.tab, activeTab === tab.label && styles.tabActive]}
             onPress={() => setActiveTab(tab.label)}
           >
-            <Feather 
-              name={tab.icon} 
-              size={16} 
-              color={activeTab === tab.label ? '#ffffff' : '#737373'} 
-              style={styles.tabIcon}
-            />
+            {tab.type === 'fa5' ? (
+              <FontAwesome5 
+                name={tab.icon} 
+                size={14} 
+                color={activeTab === tab.label ? '#ffffff' : '#737373'} 
+                style={styles.tabIcon}
+              />
+            ) : (
+              <Feather 
+                name={tab.icon as any} 
+                size={16} 
+                color={activeTab === tab.label ? '#ffffff' : '#737373'} 
+                style={styles.tabIcon}
+              />
+            )}
             <Text style={[styles.tabText, activeTab === tab.label && styles.tabTextActive]}>
               {tab.label}
             </Text>
@@ -183,7 +192,11 @@ export default function HomeScreen() {
                 <Text style={styles.cardDescription} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.cardFooter}>
                   <View style={styles.typeTag}>
-                    <Feather name={getTypeIcon(item.type)} size={12} color="#37ab30" />
+                    {getTypeIcon(item.type).type === 'fa5' ? (
+                      <FontAwesome5 name={getTypeIcon(item.type).name as any} size={10} color="#37ab30" />
+                    ) : (
+                      <Feather name={getTypeIcon(item.type).name as any} size={12} color="#37ab30" />
+                    )}
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   {item.duration && (
@@ -217,7 +230,7 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   header: {
     backgroundColor: '#37ab30',
     paddingTop: 55,
-    paddingBottom: 30,
+    paddingBottom: 35,
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -243,35 +256,34 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   },
   tabContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 12,
     backgroundColor: isDarkMode ? '#0a0a0a' : '#f8f8f8',
+    gap: 8,
   },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    marginRight: 10,
-    borderRadius: 24,
-    backgroundColor: isDarkMode ? '#1a1a1a' : '#e8e8e8',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 18,
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
+    borderWidth: 1,
+    borderColor: isDarkMode ? '#333333' : '#d0d0d0',
   },
   tabActive: {
     backgroundColor: '#37ab30',
-    shadowColor: '#37ab30',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 3,
+    borderColor: '#37ab30',
   },
   tabIcon: {
-    marginRight: 6,
+    marginRight: 5,
   },
   tabText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#737373',
+    fontSize: 13,
+    fontWeight: '500',
+    color: isDarkMode ? '#a0a0a0' : '#333333',
   },
   tabTextActive: {
     color: '#ffffff',
