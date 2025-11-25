@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { fetchBuses, fetchDestinations, fetchTrains, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
@@ -54,10 +55,10 @@ export default function HomeScreen() {
   const [activeTab, setActiveTab] = useState('Buses');
   const [refreshing, setRefreshing] = useState(false);
 
-  const { buses, trains, destinations, isLoading } = useAppSelector((state) => state.transport);
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { user } = useAppSelector((state) => state.auth);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { buses, trains, destinations, isLoading } = useAppSelector((state: RootState) => state.transport);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { user } = useAppSelector((state: RootState) => state.auth);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 
@@ -102,7 +103,7 @@ export default function HomeScreen() {
   };
 
   const isFavourite = (id: string) => {
-    return favourites.some(item => item.id === id);
+    return favourites.some((item: { id: string }) => item.id === id);
   };
 
   const data = getCurrentData();

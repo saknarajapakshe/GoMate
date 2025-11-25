@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { RootState } from '@/store';
 import { addFavourite } from '@/store/slices/favouritesSlice';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -90,11 +91,11 @@ const darkMapStyle = [
 export default function MapScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const buses = useAppSelector((state) => state.transport.buses);
-  const trains = useAppSelector((state) => state.transport.trains);
-  const destinations = useAppSelector((state) => state.transport.destinations);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
-  const favourites = useAppSelector((state) => state.favourites.items);
+  const buses = useAppSelector((state: RootState) => state.transport.buses);
+  const trains = useAppSelector((state: RootState) => state.transport.trains);
+  const destinations = useAppSelector((state: RootState) => state.transport.destinations);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
+  const favourites = useAppSelector((state: RootState) => state.favourites.items);
 
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
@@ -172,7 +173,7 @@ export default function MapScreen() {
 
   const handleSaveRoute = () => {
     if (selectedRoute) {
-      const isFavourite = favourites.some(fav => fav.id === selectedRoute.id);
+      const isFavourite = favourites.some((fav: { id: string }) => fav.id === selectedRoute.id);
       
       if (isFavourite) {
         Alert.alert('Already Saved', 'This route is already in your favourites!');
@@ -262,7 +263,7 @@ export default function MapScreen() {
               onPress={() => setSelectingFor('from')}
             >
               <Text style={styles.inputLabel}>From</Text>
-              <Text style={styles.inputValue }>
+              <Text style={styles.inputValue}>
                 {fromLocation || 'Select on map'}
               </Text>
             </TouchableOpacity>

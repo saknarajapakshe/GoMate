@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { RootState } from '@/store';
 import { TransportRoute } from '@/services/api';
 import { removeFavourite } from '@/store/slices/favouritesSlice';
 import { setSelectedRoute } from '@/store/slices/transportSlice';
@@ -35,8 +36,8 @@ const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
 export default function FavouritesScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 

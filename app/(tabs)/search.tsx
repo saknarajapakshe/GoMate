@@ -1,6 +1,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
+import { RootState } from '@/store';
 import { toggleFavourite } from '@/store/slices/favouritesSlice';
 import { searchRoutes, setSelectedRoute } from '@/store/slices/transportSlice';
 import { Feather } from '@expo/vector-icons';
@@ -59,9 +60,9 @@ export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const { searchResults, isLoading } = useAppSelector((state) => state.transport);
-  const { items: favourites } = useAppSelector((state) => state.favourites);
-  const { isDarkMode } = useAppSelector((state) => state.theme);
+  const { searchResults, isLoading } = useAppSelector((state: RootState) => state.transport);
+  const { items: favourites } = useAppSelector((state: RootState) => state.favourites);
+  const { isDarkMode } = useAppSelector((state: RootState) => state.theme);
 
   const styles = getStyles(isDarkMode);
 
@@ -189,7 +190,7 @@ export default function SearchScreen() {
             <Text style={styles.emptySubtext}>Try a different search term</Text>
           </View>
         ) : (
-          searchResults.map((item) => (
+          searchResults.map((item: TransportRoute) => (
             <TouchableOpacity
               key={item.id}
               style={styles.resultCard}
