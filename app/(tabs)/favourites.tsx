@@ -95,11 +95,16 @@ export default function FavouritesScreen() {
                   </View>
                 </View>
                 <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
-                <Text style={styles.cardSubtitle} numberOfLines={1}>{item.description}</Text>
                 {item.duration && (
                   <View style={styles.durationContainer}>
                     <Feather name="clock" size={12} color="#737373" />
                     <Text style={styles.durationText}>{item.duration}</Text>
+                  </View>
+                )}
+                {item.rating && (
+                  <View style={styles.ratingContainer}>
+                    <Feather name="star" size={12} color="#37ab30" />
+                    <Text style={styles.ratingText}>{item.rating}</Text>
                   </View>
                 )}
               </View>
@@ -200,21 +205,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#1a1a1a',
-    marginBottom: 4,
-  },
-  cardSubtitle: {
-    fontSize: 13,
-    color: '#737373',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   durationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 4,
   },
   durationText: {
     marginLeft: 4,
     fontSize: 12,
     color: '#737373',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    marginLeft: 4,
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#1a1a1a',
   },
   removeButton: {
     position: 'absolute',
