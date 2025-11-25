@@ -29,13 +29,9 @@ export default function ProfileScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.avatarContainer}>
-          {user?.avatar ? (
-            <Image source={{ uri: user.avatar }} style={styles.avatar} />
-          ) : (
-            <View style={styles.avatarPlaceholder}>
-              <Feather name="user" size={40} color="#ffffff" />
-            </View>
-          )}
+          <View style={[styles.avatarCircle, isDarkMode && styles.avatarCircleDark]}>
+            <Feather name="user" size={50} color={isDarkMode ? '#ffffff' : '#37ab30'} />
+          </View>
         </View>
         <Text style={styles.name}>{user?.name || 'Traveler'}</Text>
         <Text style={styles.email}>{user?.email || 'traveler@gomate.lk'}</Text>
@@ -183,20 +179,19 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   avatarContainer: {
     marginBottom: 16,
   },
-  avatar: {
+  avatarCircle: {
     width: 100,
     height: 100,
     borderRadius: 50,
-  },
-  avatarPlaceholder: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderWidth: 2,
-    borderColor: '#ffffff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 3,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  avatarCircleDark: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   name: {
     fontSize: 24,
