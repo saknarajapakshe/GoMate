@@ -7,13 +7,13 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 const getStatusColor = (status: string) => {
@@ -49,6 +49,7 @@ export default function DetailsScreen() {
 
   const { selectedRoute, isLoading } = useAppSelector((state) => state.transport);
   const { items: favourites } = useAppSelector((state) => state.favourites);
+  const { isDarkMode } = useAppSelector((state) => state.theme);
 
   useEffect(() => {
     if (id) {
@@ -66,6 +67,8 @@ export default function DetailsScreen() {
     }
   };
 
+  const styles = getStyles(isDarkMode);
+
   if (isLoading || !selectedRoute) {
     return (
       <View style={styles.loadingContainer}>
@@ -82,13 +85,13 @@ export default function DetailsScreen() {
           <Image source={{ uri: selectedRoute.image }} style={styles.heroImage} />
           <View style={styles.heroOverlay} />
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <Feather name="arrow-left" size={24} color="#1a1a1a" />
+            <Feather name="arrow-left" size={24} color={isDarkMode ? '#ffffff' : '#1a1a1a'} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.shareButton}
             onPress={() => {/* Share functionality */}}
           >
-            <Feather name="share-2" size={24} color="#1a1a1a" />
+            <Feather name="share-2" size={24} color={isDarkMode ? '#ffffff' : '#1a1a1a'} />
           </TouchableOpacity>
         </View>
 
@@ -225,16 +228,16 @@ export default function DetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
   },
   heroContainer: {
     height: 280,
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 3,
@@ -272,7 +275,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 3,
@@ -310,7 +313,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     lineHeight: 30,
   },
   badge: {
@@ -325,7 +328,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     lineHeight: 24,
     marginBottom: 20,
   },
@@ -340,7 +343,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
   },
   section: {
     marginBottom: 24,
@@ -348,11 +351,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginBottom: 16,
   },
   routeCard: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f8f8',
     borderRadius: 16,
     padding: 20,
   },
@@ -377,7 +380,7 @@ const styles = StyleSheet.create({
   routeLine: {
     width: 2,
     height: 30,
-    backgroundColor: '#d0d0d0',
+    backgroundColor: isDarkMode ? '#333333' : '#d0d0d0',
     marginLeft: 6,
     marginVertical: 4,
   },
@@ -386,13 +389,13 @@ const styles = StyleSheet.create({
   },
   routeLabel: {
     fontSize: 12,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginBottom: 2,
   },
   routeValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
   },
   detailsGrid: {
     flexDirection: 'row',
@@ -400,21 +403,21 @@ const styles = StyleSheet.create({
   },
   detailCard: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f8f8',
     borderRadius: 16,
     padding: 16,
     alignItems: 'center',
   },
   detailLabel: {
     fontSize: 12,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginTop: 8,
     marginBottom: 4,
   },
   detailValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     textAlign: 'center',
   },
   scheduleGrid: {
@@ -427,14 +430,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 14,
     paddingVertical: 10,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f8f8',
     borderRadius: 12,
   },
   scheduleTime: {
     marginLeft: 6,
     fontSize: 14,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
   },
   bottomBar: {
     position: 'absolute',
@@ -445,15 +448,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     paddingBottom: 30,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: isDarkMode ? '#333333' : '#f0f0f0',
   },
   favouriteButton: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
