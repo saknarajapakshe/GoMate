@@ -11,12 +11,10 @@ const api = axios.create({
   },
 });
 
-// Helper to get consistent placeholder images using Picsum (reliable alternative to deprecated Unsplash Source)
 const getPlaceholderImage = (seed: number) => {
    return `https://picsum.photos/seed/${seed}/400/300`;
 };
 
-// Types
 export interface TransportRoute {
   id: string;
   title: string;
