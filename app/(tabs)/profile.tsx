@@ -72,7 +72,7 @@ export default function ProfileScreen() {
         {/* Dark Mode Toggle */}
         <View style={styles.settingRow}>
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#1a1a1a' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="moon" size={18} color="#ffffff" />
             </View>
             <Text style={styles.settingLabel}>Dark Mode</Text>
