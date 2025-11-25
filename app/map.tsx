@@ -9,16 +9,16 @@ export default function MapScreen() {
   const trains = useAppSelector((state) => state.transport.trains);
   const destinations = useAppSelector((state) => state.transport.destinations);
 
-  // Sample locations in Colombo, Sri Lanka
+  // Sample locations in London, UK
   const stations = [
-    { id: 1, name: 'Colombo Fort Station', type: 'train', coordinate: { latitude: 6.9344, longitude: 79.8507 } },
-    { id: 2, name: 'Pettah Bus Terminal', type: 'bus', coordinate: { latitude: 6.9387, longitude: 79.8550 } },
-    { id: 3, name: 'Maradana Station', type: 'train', coordinate: { latitude: 6.9271, longitude: 79.8612 } },
-    { id: 4, name: 'Bambalapitiya Station', type: 'train', coordinate: { latitude: 6.8890, longitude: 79.8542 } },
-    { id: 5, name: 'Mount Lavinia Station', type: 'train', coordinate: { latitude: 6.8368, longitude: 79.8631 } },
-    { id: 6, name: 'Galle Face Terminal', type: 'bus', coordinate: { latitude: 6.9271, longitude: 79.8454 } },
-    { id: 7, name: 'Kandy Road Bus Stop', type: 'bus', coordinate: { latitude: 6.9497, longitude: 79.8608 } },
-    { id: 8, name: 'Kollupitiya Station', type: 'train', coordinate: { latitude: 6.9148, longitude: 79.8509 } },
+    { id: 1, name: 'Kings Cross Station', type: 'train', coordinate: { latitude: 51.5309, longitude: -0.1235 } },
+    { id: 2, name: 'Victoria Coach Station', type: 'bus', coordinate: { latitude: 51.4950, longitude: -0.1451 } },
+    { id: 3, name: 'Paddington Station', type: 'train', coordinate: { latitude: 51.5154, longitude: -0.1755 } },
+    { id: 4, name: 'Euston Station', type: 'train', coordinate: { latitude: 51.5282, longitude: -0.1337 } },
+    { id: 5, name: 'Liverpool Street Station', type: 'train', coordinate: { latitude: 51.5179, longitude: -0.0813 } },
+    { id: 6, name: 'Oxford Street Bus Stop', type: 'bus', coordinate: { latitude: 51.5155, longitude: -0.1419 } },
+    { id: 7, name: 'Heathrow Central', type: 'bus', coordinate: { latitude: 51.4700, longitude: -0.4543 } },
+    { id: 8, name: 'Victoria Station', type: 'train', coordinate: { latitude: 51.4952, longitude: -0.1441 } },
   ];
 
   return (
@@ -27,8 +27,8 @@ export default function MapScreen() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 6.9271,
-          longitude: 79.8612,
+          latitude: 51.5074,
+          longitude: -0.1278,
           latitudeDelta: 0.15,
           longitudeDelta: 0.15,
         }}
@@ -50,8 +50,8 @@ export default function MapScreen() {
 
       <View style={styles.bottomSheet}>
         <View style={styles.handle} />
-        <Text style={styles.sheetTitle}>Colombo Fort Station</Text>
-        <Text style={styles.sheetSubtitle}>Bus & Train Terminal</Text>
+        <Text style={styles.sheetTitle}>Kings Cross Station</Text>
+        <Text style={styles.sheetSubtitle}>Major Railway Terminal</Text>
         <View style={styles.sheetInfo}>
           <Text style={styles.sheetLabel}>Status: </Text>
           <Text style={styles.sheetValue}>Active</Text>
