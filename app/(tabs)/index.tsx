@@ -25,11 +25,11 @@ const TAB_OPTIONS = [
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'Active':
-      return '#86da18';
+      return '#37ab30';
     case 'Popular':
-      return '#54c502';
+      return '#37ab30';
     case 'Upcoming':
-      return '#86da18';
+      return '#37ab30';
     default:
       return '#737373';
   }
@@ -141,7 +141,7 @@ export default function HomeScreen() {
       {/* Content */}
       {isLoading && data.length === 0 ? (
         <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#54c502" />
+            <ActivityIndicator size="large" color="#37ab30" />
           <Text style={styles.loadingText}>Loading {activeTab.toLowerCase()}...</Text>
         </View>
       ) : (
@@ -149,7 +149,7 @@ export default function HomeScreen() {
           style={styles.content}
           showsVerticalScrollIndicator={false}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#54c502']} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#37ab30']} />
           }
         >
           {data.map((item) => (
@@ -167,7 +167,7 @@ export default function HomeScreen() {
                 <Feather
                   name="heart"
                   size={20}
-                  color={isFavourite(item.id) ? '#54c502' : '#ffffff'}
+                  color={isFavourite(item.id) ? '#37ab30' : '#ffffff'}
                 />
               </TouchableOpacity>
               <View style={styles.cardContent}>
@@ -180,7 +180,7 @@ export default function HomeScreen() {
                 <Text style={styles.cardDescription} numberOfLines={1}>{item.description}</Text>
                 <View style={styles.cardFooter}>
                   <View style={styles.typeTag}>
-                    <Feather name={getTypeIcon(item.type)} size={12} color="#54c502" />
+                    <Feather name={getTypeIcon(item.type)} size={12} color="#37ab30" />
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   {item.duration && (
@@ -191,7 +191,7 @@ export default function HomeScreen() {
                   )}
                   {item.rating && (
                     <View style={styles.ratingTag}>
-                      <Feather name="star" size={12} color="#86da18" />
+                      <Feather name="star" size={12} color="#37ab30" />
                       <Text style={styles.ratingText}>{item.rating}</Text>
                     </View>
                   )}
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   tabActive: {
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
   },
   tabIcon: {
     marginRight: 6,
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 12,
     fontWeight: '500',
-    color: '#54c502',
+    color: '#37ab30',
     textTransform: 'capitalize',
   },
   durationTag: {

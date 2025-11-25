@@ -32,8 +32,8 @@ function RootLayoutNav() {
 
 function LoadingScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#54c502' }}>
-      <ActivityIndicator size="large" color="#86da18" />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#37ab30' }}>
+      <ActivityIndicator size="large" color="#37ab30" />
     </View>
   );
 }

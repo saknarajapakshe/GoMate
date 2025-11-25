@@ -39,7 +39,7 @@ export default function ProfileScreen() {
         <Text style={styles.email}>{user?.email || 'traveler@gomate.lk'}</Text>
         <Text style={styles.username}>@{user?.username || 'traveler'}</Text>
         <TouchableOpacity style={styles.editButton}>
-          <Feather name="edit-2" size={14} color="#54c502" />
+          <Feather name="edit-2" size={14} color="#37ab30" />
           <Text style={styles.editButtonText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
@@ -47,17 +47,17 @@ export default function ProfileScreen() {
       {/* Stats */}
       <View style={styles.statsContainer}>
         <View style={styles.statCard}>
-          <Feather name="navigation" size={20} color="#54c502" />
+          <Feather name="navigation" size={20} color="#37ab30" />
           <Text style={styles.statNumber}>12</Text>
           <Text style={styles.statLabel}>Trips</Text>
         </View>
         <View style={styles.statCard}>
-          <Feather name="map" size={20} color="#86da18" />
+          <Feather name="map" size={20} color="#37ab30" />
           <Text style={styles.statNumber}>8</Text>
           <Text style={styles.statLabel}>Routes</Text>
         </View>
         <View style={styles.statCard}>
-          <Feather name="heart" size={20} color="#86da18" />
+          <Feather name="heart" size={20} color="#37ab30" />
           <Text style={styles.statNumber}>{favourites.length}</Text>
           <Text style={styles.statLabel}>Favorites</Text>
         </View>
@@ -78,15 +78,15 @@ export default function ProfileScreen() {
           <Switch
             value={isDarkMode}
             onValueChange={handleDarkModeToggle}
-            trackColor={{ false: '#e5e5e5', true: '#54c502' }}
-            thumbColor={isDarkMode ? '#86da18' : '#f4f3f4'}
+            trackColor={{ false: '#e5e5e5', true: '#37ab30' }}
+            thumbColor={isDarkMode ? '#37ab30' : '#f4f3f4'}
           />
         </View>
 
         {/* Notifications */}
         <TouchableOpacity style={styles.settingRow}>
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#86da18' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="bell" size={18} color="#ffffff" />
             </View>
             <Text style={styles.settingLabel}>Notifications</Text>
@@ -97,7 +97,7 @@ export default function ProfileScreen() {
         {/* Language */}
         <TouchableOpacity style={styles.settingRow}>
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#86da18' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="globe" size={18} color="#ffffff" />
             </View>
             <Text style={styles.settingLabel}>Language</Text>
@@ -115,7 +115,7 @@ export default function ProfileScreen() {
         {/* Help */}
         <TouchableOpacity style={styles.settingRow}>
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#86da18' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="help-circle" size={18} color="#1a1a1a" />
             </View>
             <Text style={styles.settingLabel}>Help & FAQ</Text>
@@ -126,7 +126,7 @@ export default function ProfileScreen() {
         {/* About */}
         <TouchableOpacity style={styles.settingRow}>
           <View style={styles.settingLeft}>
-            <View style={[styles.settingIcon, { backgroundColor: '#54c502' }]}>
+            <View style={[styles.settingIcon, { backgroundColor: '#37ab30' }]}>
               <Feather name="info" size={18} color="#ffffff" />
             </View>
             <Text style={styles.settingLabel}>About GoMate</Text>
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 13,
-    color: '#54c502',
+    color: '#37ab30',
     fontWeight: '500',
     marginBottom: 16,
   },
@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     borderWidth: 1.5,
-    borderColor: '#54c502',
+    borderColor: '#37ab30',
     gap: 6,
   },
   editButtonText: {
-    color: '#54c502',
+    color: '#37ab30',
     fontSize: 14,
     fontWeight: '600',
   },

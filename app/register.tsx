@@ -120,7 +120,7 @@ export default function RegisterScreen() {
 
         {error && (
           <View style={styles.errorContainer}>
-            <Feather name="alert-circle" size={18} color="#54c502" />
+            <Feather name="alert-circle" size={18} color="#37ab30" />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         )}
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#54c502',
+    color: '#37ab30',
     flex: 1,
   },
   form: {
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#54c502',
+    borderColor: '#37ab30',
   },
   inputIcon: {
     marginRight: 12,
@@ -431,13 +431,13 @@ const styles = StyleSheet.create({
   errorMessage: {
     marginTop: 4,
     fontSize: 12,
-    color: '#54c502',
+    color: '#37ab30',
   },
   registerButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     borderRadius: 12,
     paddingVertical: 16,
     marginTop: 8,
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 15,
-    color: '#54c502',
+    color: '#37ab30',
     fontWeight: '700',
   },
 });

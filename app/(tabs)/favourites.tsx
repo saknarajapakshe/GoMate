@@ -9,11 +9,11 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'Active':
-      return '#86da18';
+      return '#37ab30';
     case 'Popular':
-      return '#54c502';
+      return '#37ab30';
     case 'Upcoming':
-      return '#86da18';
+      return '#37ab30';
     default:
       return '#737373';
   }
@@ -85,7 +85,7 @@ export default function FavouritesScreen() {
               <View style={styles.cardContent}>
                 <View style={styles.cardHeader}>
                   <View style={styles.typeContainer}>
-                    <Feather name={getTypeIcon(item.type)} size={12} color="#54c502" />
+                    <Feather name={getTypeIcon(item.type)} size={12} color="#37ab30" />
                     <Text style={styles.typeText}>{item.type}</Text>
                   </View>
                   <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
@@ -105,7 +105,7 @@ export default function FavouritesScreen() {
                 style={styles.removeButton}
                 onPress={() => handleRemoveFavourite(item.id)}
               >
-                <Feather name="heart" size={22} color="#54c502" />
+                <Feather name="heart" size={22} color="#37ab30" />
               </TouchableOpacity>
             </TouchableOpacity>
           ))}
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 11,
     fontWeight: '500',
-    color: '#54c502',
+    color: '#37ab30',
     textTransform: 'capitalize',
   },
   statusBadge: {
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   exploreButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     paddingHorizontal: 24,
     paddingVertical: 14,
     borderRadius: 12,

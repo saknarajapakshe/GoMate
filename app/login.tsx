@@ -86,7 +86,7 @@ export default function LoginScreen() {
 
         {/* Demo Account Info */}
         <View style={styles.demoInfo}>
-          <Feather name="info" size={16} color="#54c502" />
+          <Feather name="info" size={16} color="#37ab30" />
           <Text style={styles.demoText}>
             Demo: username: <Text style={styles.demoBold}>emilys</Text>, password: <Text style={styles.demoBold}>emilyspass</Text>
           </Text>
@@ -94,7 +94,7 @@ export default function LoginScreen() {
 
         {error && (
           <View style={styles.errorContainer}>
-            <Feather name="alert-circle" size={18} color="#54c502" />
+            <Feather name="alert-circle" size={18} color="#37ab30" />
             <Text style={styles.errorText}>{error}</Text>
           </View>
         )}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   demoText: {
     marginLeft: 8,
     fontSize: 13,
-    color: '#54c502',
+    color: '#37ab30',
     flex: 1,
   },
   demoBold: {
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#54c502',
+    color: '#37ab30',
     flex: 1,
   },
   form: {
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#54c502',
+    borderColor: '#37ab30',
   },
   inputIcon: {
     marginRight: 12,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   errorMessage: {
     marginTop: 6,
     fontSize: 13,
-    color: '#54c502',
+    color: '#37ab30',
   },
   forgotPassword: {
     alignSelf: 'flex-end',
@@ -318,14 +318,14 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     fontSize: 14,
-    color: '#54c502',
+    color: '#37ab30',
     fontWeight: '600',
   },
   loginButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#54c502',
+    backgroundColor: '#37ab30',
     borderRadius: 12,
     paddingVertical: 16,
     gap: 8,
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 15,
-    color: '#54c502',
+    color: '#37ab30',
     fontWeight: '700',
   },
 });

@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 
 export default function TabLayout() {
   const isDarkMode = useAppSelector((state) => state.theme?.isDarkMode ?? false);
-  const primaryColor = '#54c502';
+  const primaryColor = '#37ab30';
 
   return (
     <Tabs
