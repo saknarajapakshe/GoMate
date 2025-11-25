@@ -11,6 +11,10 @@ const api = axios.create({
   },
 });
 
+const getUnsplashImage = (query: string, seed: string) => {
+   return `https://source.unsplash.com/400x300/?${query}&sig=${seed}`;
+};
+
 // Types
 export interface TransportRoute {
   id: string;
@@ -44,7 +48,7 @@ const SRI_LANKAN_BUSES: TransportRoute[] = [
     description: 'Express highway service via E01',
     type: 'bus',
     status: 'Active',
-    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400',
+    image: getUnsplashImage('bus,transport,srilanka', 'bus1'),
     duration: '2h 30min',
     origin: 'Colombo Central',
     destination: 'Kandy Bus Stand',
@@ -59,7 +63,7 @@ const SRI_LANKAN_BUSES: TransportRoute[] = [
     description: 'Coastal route via Southern Expressway',
     type: 'bus',
     status: 'Popular',
-    image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400',
+    image: getUnsplashImage('bus,highway,travel', 'bus2'),
     duration: '1h 45min',
     origin: 'Fort Railway Station',
     destination: 'Galle Bus Stand',
@@ -74,7 +78,7 @@ const SRI_LANKAN_BUSES: TransportRoute[] = [
     description: 'Airport express service',
     type: 'bus',
     status: 'Active',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400',
+    image: getUnsplashImage('bus,airport,express', 'bus3'),
     duration: '45min',
     origin: 'Pettah',
     destination: 'Negombo Town',
@@ -122,7 +126,7 @@ const SRI_LANKAN_TRAINS: TransportRoute[] = [
     description: 'Scenic mountain railway journey',
     type: 'train',
     status: 'Popular',
-    image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400',
+    image: getUnsplashImage('train,railway,mountain', 'train1'),
     duration: '2h 45min',
     origin: 'Colombo Fort',
     destination: 'Kandy Station',
@@ -137,7 +141,7 @@ const SRI_LANKAN_TRAINS: TransportRoute[] = [
     description: 'World-famous tea country route',
     type: 'train',
     status: 'Popular',
-    image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=400',
+    image: getUnsplashImage('train,srilanka,scenic', 'train2'),
     duration: '6h 30min',
     origin: 'Kandy',
     destination: 'Ella',
@@ -200,7 +204,7 @@ const SRI_LANKAN_DESTINATIONS: TransportRoute[] = [
     description: 'UNESCO World Heritage ancient rock fortress',
     type: 'destination',
     status: 'Popular',
-    image: 'https://images.unsplash.com/photo-1588598198321-e706c30b37cb?w=400',
+    image: getUnsplashImage('sigiriya,srilanka,rock', 'dest1'),
     rating: 4.9,
     reviews: 2341,
   },
@@ -210,7 +214,7 @@ const SRI_LANKAN_DESTINATIONS: TransportRoute[] = [
     description: 'Historic Dutch colonial fortification',
     type: 'destination',
     status: 'Popular',
-    image: 'https://images.unsplash.com/photo-1586016413664-864c0dd76f53?w=400',
+    image: getUnsplashImage('galle,fort,srilanka', 'dest2'),
     rating: 4.7,
     reviews: 1876,
   },
