@@ -1,65 +1,221 @@
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { TransportRoute } from '@/services/api';
+import { toggleFavourite } from '@/store/slices/favouritesSlice';
+import { fetchRouteById } from '@/store/slices/transportSlice';
+import { Feather } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect } from 'react';
+import {
+    ActivityIndicator,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'Active':
+      return '#00534E';
+    case 'Popular':
+      return '#8D153A';
+    case 'Upcoming':
+      return '#E57200';
+    default:
+      return '#737373';
+  }
+};
+
+const getTypeIcon = (type: string): keyof typeof Feather.glyphMap => {
+  switch (type) {
+    case 'bus':
+      return 'truck';
+    case 'train':
+      return 'navigation';
+    case 'destination':
+      return 'map-pin';
+    default:
+      return 'circle';
+  }
+};
 
 export default function DetailsScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const dispatch = useAppDispatch();
+
+  const { selectedRoute, isLoading } = useAppSelector((state) => state.transport);
+  const { items: favourites } = useAppSelector((state) => state.favourites);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchRouteById(id));
+    }
+  }, [id]);
+
+  const isFavourite = (routeId: string) => {
+    return favourites.some((item: TransportRoute) => item.id === routeId);
+  };
+
+  const handleFavouritePress = () => {
+    if (selectedRoute) {
+      dispatch(toggleFavourite(selectedRoute));
+    }
+  };
+
+  if (isLoading || !selectedRoute) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#8D153A" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.heroImage}>
-          <Text style={styles.heroEmoji}>🚌</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Hero Image */}
+        <View style={styles.heroContainer}>
+          <Image source={{ uri: selectedRoute.image }} style={styles.heroImage} />
+          <View style={styles.heroOverlay} />
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backIcon}>←</Text>
+            <Feather name="arrow-left" size={24} color="#1a1a1a" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.shareButton}
+            onPress={() => {/* Share functionality */}}
+          >
+            <Feather name="share-2" size={24} color="#1a1a1a" />
           </TouchableOpacity>
         </View>
 
         <View style={styles.content}>
+          {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Colombo - Kandy Express</Text>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>Active</Text>
-            </View>
-          </View>
-
-          <Text style={styles.description}>
-            Experience a comfortable journey through scenic routes connecting Colombo to Kandy.
-            This express service offers air-conditioned comfort with regular departures throughout
-            the day.
-          </Text>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Route Information</Text>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Duration:</Text>
-              <Text style={styles.infoValue}>3 hours 30 minutes</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Distance:</Text>
-              <Text style={styles.infoValue}>115 km</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Fare:</Text>
-              <Text style={styles.infoValue}>LKR 450</Text>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Key Stops</Text>
-            {['Colombo Fort', 'Kadawatha', 'Kiribathgoda', 'Gampaha', 'Kandy'].map((stop, index) => (
-              <View key={index} style={styles.stopRow}>
-                <View style={styles.stopDot} />
-                <Text style={styles.stopText}>{stop}</Text>
+            <View style={styles.headerLeft}>
+              <View style={styles.typeContainer}>
+                <Feather name={getTypeIcon(selectedRoute.type)} size={16} color="#8D153A" />
+                <Text style={styles.typeText}>{selectedRoute.type}</Text>
               </View>
-            ))}
+              <Text style={styles.title}>{selectedRoute.title}</Text>
+            </View>
+            <View style={[styles.badge, { backgroundColor: getStatusColor(selectedRoute.status) }]}>
+              <Text style={styles.badgeText}>{selectedRoute.status}</Text>
+            </View>
           </View>
 
-          <TouchableOpacity style={styles.favouriteButton}>
-            <Text style={styles.favouriteButtonText}>❤️ Add to Favourites</Text>
-          </TouchableOpacity>
+          {/* Description */}
+          <Text style={styles.description}>{selectedRoute.description}</Text>
+
+          {/* Rating */}
+          {selectedRoute.rating && (
+            <View style={styles.ratingContainer}>
+              <View style={styles.ratingStars}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Feather
+                    key={star}
+                    name="star"
+                    size={18}
+                    color={star <= Math.floor(selectedRoute.rating!) ? '#FDB913' : '#e0e0e0'}
+                  />
+                ))}
+              </View>
+              <Text style={styles.ratingText}>
+                {selectedRoute.rating} ({selectedRoute.reviews} reviews)
+              </Text>
+            </View>
+          )}
+
+          {/* Route Information */}
+          {(selectedRoute.origin || selectedRoute.destination) && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Route Information</Text>
+              <View style={styles.routeCard}>
+                {selectedRoute.origin && (
+                  <View style={styles.routePoint}>
+                    <View style={styles.routeDotStart} />
+                    <View style={styles.routePointContent}>
+                      <Text style={styles.routeLabel}>From</Text>
+                      <Text style={styles.routeValue}>{selectedRoute.origin}</Text>
+                    </View>
+                  </View>
+                )}
+                {selectedRoute.origin && selectedRoute.destination && (
+                  <View style={styles.routeLine} />
+                )}
+                {selectedRoute.destination && (
+                  <View style={styles.routePoint}>
+                    <View style={styles.routeDotEnd} />
+                    <View style={styles.routePointContent}>
+                      <Text style={styles.routeLabel}>To</Text>
+                      <Text style={styles.routeValue}>{selectedRoute.destination}</Text>
+                    </View>
+                  </View>
+                )}
+              </View>
+            </View>
+          )}
+
+          {/* Trip Details */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Trip Details</Text>
+            <View style={styles.detailsGrid}>
+              {selectedRoute.duration && (
+                <View style={styles.detailCard}>
+                  <Feather name="clock" size={24} color="#8D153A" />
+                  <Text style={styles.detailLabel}>Duration</Text>
+                  <Text style={styles.detailValue}>{selectedRoute.duration}</Text>
+                </View>
+              )}
+              {selectedRoute.price && (
+                <View style={styles.detailCard}>
+                  <Feather name="tag" size={24} color="#00534E" />
+                  <Text style={styles.detailLabel}>Price</Text>
+                  <Text style={styles.detailValue}>{selectedRoute.price}</Text>
+                </View>
+              )}
+            </View>
+          </View>
+
+          {/* Schedule */}
+          {selectedRoute.schedule && selectedRoute.schedule.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Schedule</Text>
+              <View style={styles.scheduleGrid}>
+                {selectedRoute.schedule.map((time, index) => (
+                  <View key={index} style={styles.scheduleItem}>
+                    <Feather name="clock" size={14} color="#737373" />
+                    <Text style={styles.scheduleTime}>{time}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
         </View>
       </ScrollView>
+
+      {/* Bottom Action Bar */}
+      <View style={styles.bottomBar}>
+        <TouchableOpacity
+          style={[
+            styles.favouriteButton,
+            isFavourite(selectedRoute.id) && styles.favouriteButtonActive,
+          ]}
+          onPress={handleFavouritePress}
+        >
+          <Feather
+            name="heart"
+            size={24}
+            color={isFavourite(selectedRoute.id) ? '#8D153A' : '#737373'}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bookButton}>
+          <Text style={styles.bookButtonText}>Book Now</Text>
+          <Feather name="arrow-right" size={20} color="#ffffff" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -69,62 +225,117 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  heroImage: {
-    height: 250,
-    backgroundColor: '#FDB913',
-    alignItems: 'center',
+  loadingContainer: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  heroContainer: {
+    height: 280,
     position: 'relative',
   },
-  heroEmoji: {
-    fontSize: 100,
+  heroImage: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#e0e0e0',
+  },
+  heroOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
   backButton: {
     position: 'absolute',
     top: 50,
     left: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  backIcon: {
-    fontSize: 24,
-    color: '#1a1a1a',
+  shareButton: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   content: {
     padding: 20,
+    paddingBottom: 100,
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  headerLeft: {
+    flex: 1,
+    marginRight: 12,
+  },
+  typeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  typeText: {
+    marginLeft: 6,
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#8D153A',
+    textTransform: 'capitalize',
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
     color: '#1a1a1a',
-    flex: 1,
+    lineHeight: 30,
   },
   badge: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     paddingVertical: 6,
-    borderRadius: 12,
-    backgroundColor: '#00534E',
+    borderRadius: 14,
   },
   badgeText: {
     color: '#ffffff',
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
   },
   description: {
     fontSize: 16,
     color: '#737373',
     lineHeight: 24,
+    marginBottom: 20,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 24,
+  },
+  ratingStars: {
+    flexDirection: 'row',
+    marginRight: 8,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: '#737373',
   },
   section: {
     marginBottom: 24,
@@ -133,50 +344,131 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: '#1a1a1a',
-    marginBottom: 12,
+    marginBottom: 16,
   },
-  infoRow: {
+  routeCard: {
+    backgroundColor: '#f8f8f8',
+    borderRadius: 16,
+    padding: 20,
+  },
+  routePoint: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    alignItems: 'center',
   },
-  infoLabel: {
-    fontSize: 16,
+  routeDotStart: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#00534E',
+    marginRight: 16,
+  },
+  routeDotEnd: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#8D153A',
+    marginRight: 16,
+  },
+  routeLine: {
+    width: 2,
+    height: 30,
+    backgroundColor: '#d0d0d0',
+    marginLeft: 6,
+    marginVertical: 4,
+  },
+  routePointContent: {
+    flex: 1,
+  },
+  routeLabel: {
+    fontSize: 12,
     color: '#737373',
+    marginBottom: 2,
   },
-  infoValue: {
+  routeValue: {
     fontSize: 16,
     fontWeight: '600',
     color: '#1a1a1a',
   },
-  stopRow: {
+  detailsGrid: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  detailCard: {
+    flex: 1,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 16,
+    padding: 16,
+    alignItems: 'center',
+  },
+  detailLabel: {
+    fontSize: 12,
+    color: '#737373',
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  detailValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    textAlign: 'center',
+  },
+  scheduleGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  scheduleItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 12,
   },
-  stopDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#8D153A',
-    marginRight: 12,
-  },
-  stopText: {
-    fontSize: 16,
+  scheduleTime: {
+    marginLeft: 6,
+    fontSize: 14,
+    fontWeight: '600',
     color: '#1a1a1a',
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    paddingBottom: 30,
+    backgroundColor: '#ffffff',
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
   },
   favouriteButton: {
-    backgroundColor: '#8D153A',
-    borderRadius: 12,
-    paddingVertical: 16,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
-    marginTop: 20,
+    justifyContent: 'center',
+    marginRight: 12,
   },
-  favouriteButtonText: {
+  favouriteButtonActive: {
+    backgroundColor: 'rgba(141, 21, 58, 0.1)',
+  },
+  bookButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#8D153A',
+    borderRadius: 16,
+    paddingVertical: 18,
+    gap: 8,
+  },
+  bookButtonText: {
     color: '#ffffff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
