@@ -49,8 +49,10 @@ export default function FavouritesScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Favourites</Text>
-        <Text style={styles.subtitle}>Your saved routes and destinations</Text>
+        <View>
+          <Text style={styles.title}>Favourites</Text>
+          <Text style={styles.subtitle}>Your saved routes and destinations</Text>
+        </View>
       </View>
 
       {favourites.length === 0 ? (

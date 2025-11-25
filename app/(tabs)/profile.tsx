@@ -39,7 +39,7 @@ export default function ProfileScreen() {
         <Text style={styles.email}>{user?.email || 'traveler@gomate.lk'}</Text>
         <Text style={styles.username}>@{user?.username || 'traveler'}</Text>
         <TouchableOpacity style={styles.editButton}>
-          <Feather name="edit-2" size={14} color="#37ab30" />
+          <Feather name="edit-2" size={14} color="#ffffff" />
           <Text style={styles.editButtonText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
@@ -172,11 +172,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   header: {
+    backgroundColor: '#37ab30',
     alignItems: 'center',
-    paddingTop: 60,
-    paddingBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    paddingTop: 50,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
   },
   avatarContainer: {
     marginBottom: 16,
@@ -190,24 +190,26 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#37ab30',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 2,
+    borderColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
   name: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: '#ffffff',
     marginBottom: 4,
   },
   email: {
     fontSize: 14,
-    color: '#737373',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 2,
   },
   username: {
     fontSize: 13,
-    color: '#37ab30',
+    color: 'rgba(255, 255, 255, 0.8)',
     fontWeight: '500',
     marginBottom: 16,
   },
@@ -217,12 +219,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    borderWidth: 1.5,
-    borderColor: '#37ab30',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     gap: 6,
   },
   editButtonText: {
-    color: '#37ab30',
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
   },
