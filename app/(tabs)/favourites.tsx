@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { TransportRoute } from '@/services/api';
 import { removeFavourite } from '@/store/slices/favouritesSlice';
 import { setSelectedRoute } from '@/store/slices/transportSlice';
-import { Feather } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -36,6 +36,9 @@ export default function FavouritesScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { items: favourites } = useAppSelector((state) => state.favourites);
+  const { isDarkMode } = useAppSelector((state) => state.theme);
+
+  const styles = getStyles(isDarkMode);
 
   const handleCardPress = (item: TransportRoute) => {
     dispatch(setSelectedRoute(item));
@@ -123,10 +126,10 @@ export default function FavouritesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (isDarkMode: boolean) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#0a0a0a' : '#ffffff',
   },
   header: {
     paddingHorizontal: 20,
@@ -136,16 +139,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
   },
   countText: {
     fontSize: 14,
-    color: '#737373',
+    color: isDarkMode ? '#a0a0a0' : '#737373',
     marginBottom: 16,
   },
   content: {
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
     borderRadius: 16,
     marginBottom: 16,
     overflow: 'hidden',
@@ -204,7 +207,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginBottom: 8,
   },
   durationContainer: {
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f8f8',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: isDarkMode ? '#ffffff' : '#1a1a1a',
     marginBottom: 8,
   },
   emptySubtext: {
