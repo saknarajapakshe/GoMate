@@ -1,5 +1,6 @@
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -7,23 +8,27 @@ const { width } = Dimensions.get('window');
 const slides = [
   {
     title: 'Explore Public Transport',
-    description: 'Find buses, trains, and destinations across Sri Lanka',
-    emoji: '🚌',
+    description: 'Find buses, trains, and destinations across Sri Lanka with ease',
+    icon: 'compass' as const,
+    bgColor: '#8D153A',
   },
   {
     title: 'Find Routes & Schedules',
     description: 'Real-time schedules and route information at your fingertips',
-    emoji: '🗺️',
+    icon: 'map' as const,
+    bgColor: '#00534E',
   },
   {
-    title: 'Save Favorites & Plan Trips',
-    description: 'Keep track of your favorite routes and plan your journeys',
-    emoji: '⭐',
+    title: 'Save Favorites & Plan',
+    description: 'Keep track of your favorite routes and plan your journeys ahead',
+    icon: 'heart' as const,
+    bgColor: '#E57200',
   },
 ];
 
 export default function OnboardingScreen() {
   const router = useRouter();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleScroll = (event: any) => {
@@ -32,14 +37,18 @@ export default function OnboardingScreen() {
   };
 
   const handleSkip = () => {
-    router.replace('/(tabs)');
+    router.replace('/login');
   };
 
   const handleNext = () => {
     if (currentSlide < slides.length - 1) {
+      scrollViewRef.current?.scrollTo({
+        x: (currentSlide + 1) * width,
+        animated: true,
+      });
       setCurrentSlide(currentSlide + 1);
     } else {
-      router.replace('/(tabs)');
+      router.replace('/login');
     }
   };
 
@@ -47,9 +56,11 @@ export default function OnboardingScreen() {
     <View style={styles.container}>
       <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
         <Text style={styles.skipText}>Skip</Text>
+        <Feather name="chevron-right" size={16} color="#8D153A" />
       </TouchableOpacity>
 
       <ScrollView
+        ref={scrollViewRef}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -59,8 +70,8 @@ export default function OnboardingScreen() {
       >
         {slides.map((slide, index) => (
           <View key={index} style={[styles.slide, { width }]}>
-            <View style={styles.emojiContainer}>
-              <Text style={styles.emoji}>{slide.emoji}</Text>
+            <View style={[styles.iconContainer, { backgroundColor: slide.bgColor }]}>
+              <Feather name={slide.icon} size={60} color="#ffffff" />
             </View>
             <Text style={styles.title}>{slide.title}</Text>
             <Text style={styles.description}>{slide.description}</Text>
@@ -84,7 +95,17 @@ export default function OnboardingScreen() {
         <Text style={styles.nextButtonText}>
           {currentSlide === slides.length - 1 ? 'Get Started' : 'Next'}
         </Text>
+        <Feather name="arrow-right" size={20} color="#ffffff" />
       </TouchableOpacity>
+
+      {currentSlide === slides.length - 1 && (
+        <View style={styles.authOptions}>
+          <Text style={styles.authText}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => router.push('/login')}>
+            <Text style={styles.loginLink}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -96,10 +117,13 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     position: 'absolute',
-    top: 50,
+    top: 55,
     right: 20,
     zIndex: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
+    gap: 4,
   },
   skipText: {
     color: '#8D153A',
@@ -115,20 +139,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 40,
   },
-  emojiContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#FDB913',
+  iconContainer: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 40,
-  },
-  emoji: {
-    fontSize: 60,
+    marginBottom: 48,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
     color: '#1a1a1a',
     textAlign: 'center',
@@ -138,13 +163,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#737373',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 26,
+    paddingHorizontal: 10,
   },
   pagination: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 32,
   },
   dot: {
     width: 8,
@@ -155,19 +181,38 @@ const styles = StyleSheet.create({
   },
   dotActive: {
     backgroundColor: '#8D153A',
-    width: 24,
+    width: 28,
   },
   nextButton: {
-    backgroundColor: '#8D153A',
-    marginHorizontal: 20,
-    marginBottom: 40,
-    paddingVertical: 16,
-    borderRadius: 12,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#8D153A',
+    marginHorizontal: 24,
+    marginBottom: 20,
+    paddingVertical: 18,
+    borderRadius: 14,
+    gap: 10,
   },
   nextButtonText: {
     color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  authOptions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+    gap: 6,
+  },
+  authText: {
+    fontSize: 15,
+    color: '#737373',
+  },
+  loginLink: {
+    fontSize: 15,
+    color: '#8D153A',
+    fontWeight: '700',
   },
 });
