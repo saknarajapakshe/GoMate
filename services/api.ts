@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 // Using Transport for London API (free, no auth required for basic endpoints)
-// and mock data for Sri Lankan routes
 const BASE_URL = 'https://api.tfl.gov.uk';
 
 const api = axios.create({
